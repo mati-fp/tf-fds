@@ -2,8 +2,12 @@ package app.shop.dominio;
 
 import java.util.List;
 
-public  interface IRepProdutos {
-    void save(Produto p);
-    List<Produto> all();
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+public interface IRepProdutos extends JpaRepository<Produto, String>{
+    @Query("SELECT p FROM Produto p JOIN Estoque e ON p.codigo = e.produto.codigo WHERE e.quantidadeAtual > 0")
+    List<Produto> findAllAvailableInStock();
 }
+
 

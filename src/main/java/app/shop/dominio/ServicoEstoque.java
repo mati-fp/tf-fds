@@ -14,7 +14,7 @@ public class ServicoEstoque {
         this.produtosRep = produtosRep;
     }
 
-    public List<Produto> produtosDisponiveis(){
-        return produtosRep.all();
-    }
+    // public List<Produto> produtosDisponiveis(){
+    //     return produtosRep.all();
+    // }
 }
