@@ -10,8 +10,6 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class ItemPedido {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @ManyToOne
     @JoinColumn(name = "codigo_pedido")
     private Pedido pedido;

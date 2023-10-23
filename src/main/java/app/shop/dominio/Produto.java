@@ -13,7 +13,7 @@ public class Produto {
     private String descricao;
     private double preco;
 
-    public Produto() {}
+    protected Produto() {}
 
     public Produto(String codigo, String descricao, double preco) {
         this.codigo = codigo;
