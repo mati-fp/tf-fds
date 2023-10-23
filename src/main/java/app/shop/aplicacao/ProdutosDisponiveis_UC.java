@@ -15,7 +15,7 @@ public class ProdutosDisponiveis_UC {
     @Autowired
     private ServicoEstoque servicoEstoque;
 
-    public List<Produto> run(){
-        return servicoEstoque.produtosDisponiveis();
-    }
+    // public List<Produto> run(){
+    //     return servicoEstoque.produtosDisponiveis();
+    // }
 }
