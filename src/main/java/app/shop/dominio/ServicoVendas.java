@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.shop.Interface.ItemPedidoDto;
 import app.shop.Interface.PedidoDto;
 
 @Service
@@ -18,14 +19,36 @@ public class ServicoVendas {
 
     public Orcamento geraOrcamento(PedidoDto pedidoDto, List<Produto> produtos){
         try {
-            // descobre o id do último pedido se houve e soma 1
             int pedido = (int) (orcamentoRep.count() + 1);
-            itemPedidoRep.saveAll(pedidoDto.itens, pedido);
+            List<ItemPedido> itens = List.of();
+            for (ItemPedidoDto itemPedidoDto : pedidoDto.itens) {
+                Produto produto = produtos.stream()
+                    .filter(p -> p.getCodigo() == itemPedidoDto.codigo_produto)
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+                ItemPedido itemPedido = new ItemPedido(produto, itemPedidoDto.quantidade);
+                itemPedidoRep.save(itemPedido);
+                itens.add(itemPedido);
+            }
             Orcamento orcamento = new Orcamento(pedidoDto, produtos, pedido);
             orcamentoRep.save(orcamento);
+            itens.forEach(item -> {
+                item.setOrcamento(orcamento);
+                itemPedidoRep.save(item);
+            });
             return orcamento;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao gerar orçamento");
+        }
+    }
+
+    public Orcamento buscaOrcamento(String orcamentoId) {
+        try {
+            //int id = Integer.parseInt(orcamentoId);
+            Orcamento orcamento = orcamentoRep.findById(orcamentoId).orElseThrow(() -> new RuntimeException("Orcamento não encontrado"));
+            return orcamento;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar orçamento");
         }
     }
 }

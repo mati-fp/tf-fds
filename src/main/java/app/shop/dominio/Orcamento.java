@@ -7,22 +7,20 @@ import java.util.UUID;
 import app.shop.Interface.PedidoDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Orcamento {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private String id;
+    @Column(name = "pedido", unique = true)
+    private Integer pedido;
     @Column(name = "data")
     private LocalDateTime data;
     @Column(name = "nome_cliente", length = 255)
     private String nomeCliente;
-    @Column(name = "pedido")
-    private Integer pedido;
     @Column(name = "valor_bruto", precision = 2)
     private double valorBruto;
     @Column(name = "valor_imposto", precision = 2)
@@ -33,6 +31,8 @@ public class Orcamento {
     private double valorFinal;
     @Column(name = "efetivado", columnDefinition = "boolean default false")
     private boolean efetivado;
+    @OneToMany
+    private List<ItemPedido> itens;
 
     public Orcamento() {}
     public Orcamento(PedidoDto pedidoDto, List<Produto> produtos, int pedido) {
@@ -43,7 +43,7 @@ public class Orcamento {
         this.valorBruto = 0;
         // aqui pega o valor bruto
         for(Produto produto : produtos){
-            int quantidade = pedidoDto.itens.stream().filter(item -> item.getCodProduto().equals(produto.getCodigo())).findFirst().get().getQuantidade();
+            int quantidade = pedidoDto.itens.stream().filter(item -> item.codigo_produto.equals(produto.getCodigo())).findFirst().get().quantidade;
             this.valorBruto += produto.getPreco() * quantidade;
         }
         this.valorImposto = this.valorBruto * 0.1;
@@ -129,7 +129,13 @@ public class Orcamento {
         this.efetivado = efetivado;
     }
 
-    
+    public void setItens(List<ItemPedido> itens) {
+        this.itens = itens;
+    }
+
+    public List<ItemPedido> getItens() {
+        return itens;
+    }
 
     
 }

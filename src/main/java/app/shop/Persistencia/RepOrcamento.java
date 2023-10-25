@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,9 @@ import app.shop.dominio.Orcamento;
 @Repository
 @Primary
 public class RepOrcamento implements IRepOrcamento{
+
+    @Autowired
+    private IRepOrcamento orcamentoRep;
 
     @Override
     public void flush() {
@@ -44,7 +48,7 @@ public class RepOrcamento implements IRepOrcamento{
     }
 
     @Override
-    public void deleteAllByIdInBatch(Iterable<Long> ids) {
+    public void deleteAllByIdInBatch(Iterable<String> ids) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteAllByIdInBatch'");
     }
@@ -56,19 +60,19 @@ public class RepOrcamento implements IRepOrcamento{
     }
 
     @Override
-    public Orcamento getOne(Long id) {
+    public Orcamento getOne(String id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getOne'");
     }
 
     @Override
-    public Orcamento getById(Long id) {
+    public Orcamento getById(String id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getById'");
     }
 
     @Override
-    public Orcamento getReferenceById(Long id) {
+    public Orcamento getReferenceById(String id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getReferenceById'");
     }
@@ -98,7 +102,7 @@ public class RepOrcamento implements IRepOrcamento{
     }
 
     @Override
-    public List<Orcamento> findAllById(Iterable<Long> ids) {
+    public List<Orcamento> findAllById(Iterable<String> ids) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAllById'");
     }
@@ -110,13 +114,13 @@ public class RepOrcamento implements IRepOrcamento{
     }
 
     @Override
-    public Optional<Orcamento> findById(Long id) {
+    public Optional<Orcamento> findById(String id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findById'");
     }
 
     @Override
-    public boolean existsById(Long id) {
+    public boolean existsById(String id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'existsById'");
     }
@@ -128,7 +132,7 @@ public class RepOrcamento implements IRepOrcamento{
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
     }
@@ -140,7 +144,7 @@ public class RepOrcamento implements IRepOrcamento{
     }
 
     @Override
-    public void deleteAllById(Iterable<? extends Long> ids) {
+    public void deleteAllById(Iterable<? extends String> ids) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteAllById'");
     }
@@ -198,5 +202,8 @@ public class RepOrcamento implements IRepOrcamento{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findBy'");
     }
+
+    
+
     
 }
