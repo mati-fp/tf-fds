@@ -1,7 +1,7 @@
 package app.shop.dominio;
 
-import app.shop.dominio.ItemPedido;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface IRepItemPedido extends JpaRepository<ItemPedido, Long> {
+public interface IRepItemPedido extends CrudRepository<ItemPedido, Integer>{
+    void saveAll(Iterable<ItemPedido> entities, int pedido);
 }

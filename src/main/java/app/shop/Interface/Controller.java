@@ -1,6 +1,5 @@
 package app.shop.Interface;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +38,12 @@ public class Controller {
     @PostMapping("fazPedido")
     @CrossOrigin("*")
     public Orcamento fazPedido(@RequestBody final PedidoDto pedidoDto){
+        try {
+            Orcamento orcamento = produtosDisponiveis_UC.fazPedido(pedidoDto);
+            return orcamento;
+        } catch (Exception e) {
+            throw e;
+        }
         
     }
 }
