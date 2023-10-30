@@ -7,9 +7,4 @@ public class ProdutoDto {
 
     public Double precoUnitario;
 
-    public Integer quantidadeMaxima;
-
-    public Integer quantidadeMinima;
-
-    public Integer quantidadeAtual;
 }

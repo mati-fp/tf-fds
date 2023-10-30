@@ -42,25 +42,25 @@ public class Controller {
 
     }
 
-    @PostMapping("fazPedido")
-    @CrossOrigin("*")
-    public Orcamento fazPedido(@RequestBody final PedidoDto pedidoDto){
-        try {
-            Orcamento orcamento = solicitarOrcamento.fazPedido(pedidoDto);
-            return orcamento;
-        } catch (Exception e) {
-            throw e;
-        }
-    }
+    // @PostMapping("fazPedido")
+    // @CrossOrigin("*")
+    // public Orcamento fazPedido(@RequestBody final PedidoDto pedidoDto){
+    //     try {
+    //         Orcamento orcamento = solicitarOrcamento.fazPedido(pedidoDto);
+    //         return orcamento;
+    //     } catch (Exception e) {
+    //         throw e;
+    //     }
+    // }
 
-    @GetMapping("fazPagemento")
-    @CrossOrigin("*")
-    public String fazPagemnto(@RequestParam("orcamentoID") final String orcamentoId){
-        try {
-            String pagamento = efetivarOrcamento.fazPagamento(orcamentoId);
-            return pagamento;
-        } catch (Exception e) {
-            return "Pagemento não efetivado";
-        }
-    }
+    // @GetMapping("fazPagemento")
+    // @CrossOrigin("*")
+    // public String fazPagemnto(@RequestParam("orcamentoID") final String orcamentoId){
+    //     try {
+    //         String pagamento = efetivarOrcamento.fazPagamento(orcamentoId);
+    //         return pagamento;
+    //     } catch (Exception e) {
+    //         return "Pagemento não efetivado";
+    //     }
+    // }
 }

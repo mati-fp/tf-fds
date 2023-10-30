@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import app.shop.Interface.ProdutoDto;
 import app.shop.dominio.Produto;
-import app.shop.dominio.ServicoEstoque;
 
 @Component
 public class ProdutosDisponiveis_UC {

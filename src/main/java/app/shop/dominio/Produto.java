@@ -6,88 +6,74 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
+import java.util.List;
 
 @Entity
+@Table(name = "produto")
 public class Produto {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "codigo")
-    private Integer codigo;
-    @Column(name = "descricao", length = 255)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "codigo", updatable = false, nullable = false)
+    private Long codigo;
+
+    @Column(name = "descricao")
     private String descricao;
-    @Column(precision = 2, name = "preco_unitario")
+
+    @Column(name = "preco_unitario", precision = 10, scale = 2)
     private Double precoUnitario;
-    @Column(name = "quantidade_maxima")
-    private Integer quantidadeMaxima;
-    @Column(name = "quantidade_minima")
-    private Integer quantidadeMinima;
-    @Column(name = "quantidade_atual")
-    private Integer quantidadeAtual;
 
-    protected Produto() {}
+    @OneToMany(mappedBy = "produto")
+    private List<ItemPedido> itensPedido;
 
-    public Produto(Integer codigo, String descricao, Double preco, Integer quantidadeMaxima, Integer quantidadeMinima,
-            Integer quantidadeAtual) {
-        this.codigo = codigo;
-        this.descricao = descricao;
-        this.precoUnitario = preco;
-        this.quantidadeMaxima = quantidadeMaxima;
-        this.quantidadeMinima = quantidadeMinima;
-        this.quantidadeAtual = quantidadeAtual;
-    }
+    @OneToOne(mappedBy = "produto")
+    private ItemDeEstoque itemDeEstoque;
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
+    public Produto() {}
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public void setPreco(double preco) {
-        this.precoUnitario = preco;
-    }
-
-    public Integer getCodigo() {
+    public Long getCodigo() {
         return codigo;
+    }
+
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
     }
 
     public String getDescricao() {
         return descricao;
     }
 
-    public double getPreco() {
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Double getPrecoUnitario() {
         return precoUnitario;
     }
 
-    public Integer getQuantidadeMaxima() {
-        return quantidadeMaxima;
+    public void setPrecoUnitario(Double precoUnitario) {
+        this.precoUnitario = precoUnitario;
     }
 
-    public void setQuantidadeMaxima(Integer quantidadeMaxima) {
-        this.quantidadeMaxima = quantidadeMaxima;
+    public List<ItemPedido> getItensPedido() {
+        return itensPedido;
     }
 
-    public Integer getQuantidadeMinima() {
-        return quantidadeMinima;
+    public void setItensPedido(List<ItemPedido> itensPedido) {
+        this.itensPedido = itensPedido;
     }
 
-    public void setQuantidadeMinima(Integer quantidadeMinima) {
-        this.quantidadeMinima = quantidadeMinima;
+    public ItemDeEstoque getItemDeEstoque() {
+        return itemDeEstoque;
     }
 
-    public Integer getQuantidadeAtual() {
-        return quantidadeAtual;
+    public void setItemDeEstoque(ItemDeEstoque itemDeEstoque) {
+        this.itemDeEstoque = itemDeEstoque;
     }
 
-    public void setQuantidadeAtual(Integer quantidadeAtual) {
-        this.quantidadeAtual = quantidadeAtual;
-    }
-
-    @Override
-    public String toString() {
-        return "Produto [codigo=" + codigo + ", descricao=" + descricao + ", preco=" + precoUnitario + ", quantidadeAtual="
-                + quantidadeAtual + ", quantidadeMaxima=" + quantidadeMaxima + ", quantidadeMinima=" + quantidadeMinima
-                + "]";
-    }
+    
 }

@@ -1,141 +1,119 @@
 package app.shop.dominio;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import app.shop.Interface.PedidoDto;
+import org.hibernate.annotations.GenericGenerator;
+import java.util.List;
+import java.util.UUID;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 
 @Entity
+@Table(name = "orcamento")
 public class Orcamento {
+
     @Id
-    @Column(name = "id")
-    private String id;
-    @Column(name = "pedido", unique = true)
-    private Integer pedido;
-    @Column(name = "data")
-    private LocalDateTime data;
-    @Column(name = "nome_cliente", length = 255)
-    private String nomeCliente;
-    @Column(name = "valor_bruto", precision = 2)
-    private double valorBruto;
-    @Column(name = "valor_imposto", precision = 2)
-    private double valorImposto;
-    @Column(name = "valor_desconto", precision = 2)
-    private double valorDesconto;
-    @Column(name = "valor_final", precision = 2)
-    private double valorFinal;
-    @Column(name = "efetivado", columnDefinition = "boolean default false")
-    private boolean efetivado;
-    @OneToMany
-    private List<ItemPedido> itens;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "pedido_id", unique = true, nullable = false)
+    private Long pedidoId;
+
+    @Column(name = "custo_pedido", precision = 10, scale = 2)
+    private Double custoPedido;
+
+    @Column(name = "custo_imposto", precision = 10, scale = 2)
+    private Double custoImposto;
+
+    @Column(name = "desconto", precision = 10, scale = 2)
+    private Double desconto;
+
+    @Column(name = "total_pagar", precision = 10, scale = 2)
+    private Double totalPagar;
+
+    @Column(name = "efetivado")
+    private Boolean efetivado;
+
+    @OneToMany(mappedBy = "orcamento")
+    private List<ItemPedido> itensPedido;
 
     public Orcamento() {}
-    public Orcamento(PedidoDto pedidoDto, List<Produto> produtos, int pedido) {
-        this.id = UUID.randomUUID().toString();
-        this.data = LocalDateTime.now();
-        this.nomeCliente = pedidoDto.nomeCliente;
-        this.pedido = pedido;
-        this.valorBruto = 0;
-        // aqui pega o valor bruto
-        for(Produto produto : produtos){
-            int quantidade = pedidoDto.itens.stream().filter(item -> item.codigo_produto.equals(produto.getCodigo())).findFirst().get().quantidade;
-            this.valorBruto += produto.getPreco() * quantidade;
-        }
-        this.valorImposto = this.valorBruto * 0.1;
-        // tem desconto se for mais de 5 itens
-        if(pedidoDto.itens.size() > 5){
-            this.valorDesconto = this.valorBruto * 0.05;
-        } else {
-            this.valorDesconto = 0;
-        }
-        this.valorFinal = this.valorBruto + this.valorImposto - this.valorDesconto;
-        this.efetivado = false;
-    }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public LocalDateTime getData() {
-        return data;
+    public Long getPedidoId() {
+        return pedidoId;
     }
 
-    public void setData(LocalDateTime data) {
-        this.data = data;
+    public void setPedidoId(Long pedidoId) {
+        this.pedidoId = pedidoId;
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
+    public Double getCustoPedido() {
+        return custoPedido;
     }
 
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
+    public void setCustoPedido(Double custoPedido) {
+        this.custoPedido = custoPedido;
     }
 
-    public Integer getPedido() {
-        return pedido;
+    public Double getCustoImposto() {
+        return custoImposto;
     }
 
-    public void setPedido(Integer pedido) {
-        this.pedido = pedido;
+    public void setCustoImposto(Double custoImposto) {
+        this.custoImposto = custoImposto;
     }
 
-    public double getValorBruto() {
-        return valorBruto;
+    public Double getDesconto() {
+        return desconto;
     }
 
-    public void setValorBruto(double valorBruto) {
-        this.valorBruto = valorBruto;
+    public void setDesconto(Double desconto) {
+        this.desconto = desconto;
     }
 
-    public double getValorImposto() {
-        return valorImposto;
+    public Double getTotalPagar() {
+        return totalPagar;
     }
 
-    public void setValorImposto(double valorImposto) {
-        this.valorImposto = valorImposto;
+    public void setTotalPagar(Double totalPagar) {
+        this.totalPagar = totalPagar;
     }
 
-    public double getValorDesconto() {
-        return valorDesconto;
-    }
-
-    public void setValorDesconto(double valorDesconto) {
-        this.valorDesconto = valorDesconto;
-    }
-
-    public double getValorFinal() {
-        return valorFinal;
-    }
-
-    public void setValorFinal(double valorFinal) {
-        this.valorFinal = valorFinal;
-    }
-
-    public boolean isEfetivado() {
+    public Boolean getEfetivado() {
         return efetivado;
     }
 
-    public void setEfetivado(boolean efetivado) {
+    public void setEfetivado(Boolean efetivado) {
         this.efetivado = efetivado;
     }
 
-    public void setItens(List<ItemPedido> itens) {
-        this.itens = itens;
+    public List<ItemPedido> getItensPedido() {
+        return itensPedido;
     }
 
-    public List<ItemPedido> getItens() {
-        return itens;
+    public void setItensPedido(List<ItemPedido> itensPedido) {
+        this.itensPedido = itensPedido;
     }
 
     
 }
+
