@@ -30,16 +30,16 @@ public class Orcamento {
     @Column(name = "pedido_id", unique = true, nullable = false)
     private Long pedidoId;
 
-    @Column(name = "custo_pedido", precision = 10, scale = 2)
+    @Column(name = "custo_pedido")
     private Double custoPedido;
 
-    @Column(name = "custo_imposto", precision = 10, scale = 2)
+    @Column(name = "custo_imposto")
     private Double custoImposto;
 
-    @Column(name = "desconto", precision = 10, scale = 2)
+    @Column(name = "desconto")
     private Double desconto;
 
-    @Column(name = "total_pagar", precision = 10, scale = 2)
+    @Column(name = "total_pagar")
     private Double totalPagar;
 
     @Column(name = "efetivado")

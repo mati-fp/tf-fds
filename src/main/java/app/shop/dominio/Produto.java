@@ -24,7 +24,7 @@ public class Produto {
     @Column(name = "descricao")
     private String descricao;
 
-    @Column(name = "preco_unitario", precision = 10, scale = 2)
+    @Column(name = "preco_unitario")
     private Double precoUnitario;
 
     @OneToMany(mappedBy = "produto")
