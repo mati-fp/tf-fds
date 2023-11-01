@@ -7,7 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.shop.Interface.ItemPedidoDto;
+import app.shop.adaptorsInterfaces.dto.ItemPedidoDto;
+import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepItemDeEstoque;
+import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepItemPedido;
+import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepProdutos;
 
 @Service
 public class ServicoEstoque {

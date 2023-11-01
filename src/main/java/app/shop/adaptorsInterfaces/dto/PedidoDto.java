@@ -1,4 +1,4 @@
-package app.shop.Interface;
+package app.shop.adaptorsInterfaces.dto;
 
 import java.util.List;
 

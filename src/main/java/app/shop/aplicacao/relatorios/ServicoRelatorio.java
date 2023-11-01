@@ -1,4 +1,4 @@
-package app.shop.aplicacao;
+package app.shop.aplicacao.relatorios;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import app.shop.dominio.IRepOrcamento;
+import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepOrcamento;
 import app.shop.dominio.Orcamento;
 
 @Component

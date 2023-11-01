@@ -1,4 +1,4 @@
-package app.shop.aplicacao;
+package app.shop.aplicacao.useCases;
 
 import java.util.List;
 

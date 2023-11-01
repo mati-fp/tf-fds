@@ -7,8 +7,10 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.shop.Interface.ItemPedidoDto;
-import app.shop.Interface.PedidoDto;
+import app.shop.adaptorsInterfaces.dto.ItemPedidoDto;
+import app.shop.adaptorsInterfaces.dto.PedidoDto;
+import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepItemPedido;
+import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepOrcamento;
 
 @Service
 public class ServicoVendas {

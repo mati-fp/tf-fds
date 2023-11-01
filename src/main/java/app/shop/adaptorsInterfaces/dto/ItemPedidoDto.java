@@ -1,4 +1,4 @@
-package app.shop.Interface;
+package app.shop.adaptorsInterfaces.dto;
 
 public class ItemPedidoDto {
     public Integer codigo_produto;

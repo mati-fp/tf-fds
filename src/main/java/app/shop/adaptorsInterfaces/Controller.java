@@ -1,4 +1,4 @@
-package app.shop.Interface;
+package app.shop.adaptorsInterfaces;
 
 import java.util.List;
 
@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.shop.aplicacao.EfetivarOrcamento;
-import app.shop.aplicacao.GerarRelatorio;
-import app.shop.aplicacao.ProdutosDisponiveis_UC;
-import app.shop.aplicacao.Relatorio;
-import app.shop.aplicacao.SolicitarOrcamento;
+import app.shop.adaptorsInterfaces.dto.PedidoDto;
+import app.shop.aplicacao.relatorios.Relatorio;
+import app.shop.aplicacao.useCases.EfetivarOrcamento;
+import app.shop.aplicacao.useCases.GerarRelatorio;
+import app.shop.aplicacao.useCases.ProdutosDisponiveis_UC;
+import app.shop.aplicacao.useCases.SolicitarOrcamento;
 import app.shop.dominio.Orcamento;
 import app.shop.dominio.Produto;
 

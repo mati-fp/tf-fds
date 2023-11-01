@@ -1,4 +1,4 @@
-package app.shop.aplicacao;
+package app.shop.aplicacao.relatorios;
 
 import java.time.LocalDateTime;
 
