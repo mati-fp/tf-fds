@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS orcamento CASCADE;
 CREATE TABLE orcamento (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     pedido_id SERIAL UNIQUE NOT NULL,
+    nome_cliente VARCHAR(255),
     custo_pedido NUMERIC(10, 2),
     custo_imposto NUMERIC(10, 2),
     desconto NUMERIC(10, 2),
@@ -50,5 +51,11 @@ ADD CONSTRAINT fk_item_pedido_cod_produto FOREIGN KEY (cod_produto) REFERENCES p
 -- Adicionar chave estrangeira para item_de_estoque
 ALTER TABLE item_de_estoque
 ADD CONSTRAINT fk_item_de_estoque_cod_produto FOREIGN KEY (cod_produto) REFERENCES produto (codigo);
+
+ALTER TABLE orcamento
+ADD COLUMN created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN updated_at TIMESTAMP WITHOUT TIME ZONE,
+ADD COLUMN deleted_at TIMESTAMP WITHOUT TIME ZONE;
+
 
 

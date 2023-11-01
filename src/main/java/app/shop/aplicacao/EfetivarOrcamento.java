@@ -14,14 +14,14 @@ public class EfetivarOrcamento {
     private ServicoVendas servicoVendas;
         
 
-    // public String fazPagamento(String orcamentoId) {
-    //     Orcamento orcamento = servicoVendas.buscaOrcamento(orcamentoId);
-    //     Boolean efetiva = servicoEstoque.buscaProdutosPorNPedido(orcamento);
-    //     if (efetiva) {
-    //         orcamento.setEfetivado(true);
-    //         return "Pagamento efetivado";
-    //     }
+    public String fazPagamento(String orcamentoId) {
+        Orcamento orcamento = servicoVendas.buscaOrcamento(orcamentoId);
+        Boolean efetiva = servicoEstoque.buscaProdutosPorNPedido(orcamento);
+        if (efetiva) {
+            servicoVendas.setEfetivado(orcamento);
+            return "Pagamento efetivado";
+        }
 
-    //     return "Não efetivado";
-    // }
+        return "Não efetivado";
+    }
 }

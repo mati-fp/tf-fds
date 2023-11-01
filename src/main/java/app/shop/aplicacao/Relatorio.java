@@ -1,8 +1,11 @@
 package app.shop.aplicacao;
 
-import org.springframework.stereotype.Component;
+import java.time.LocalDateTime;
 
-@Component
 public class Relatorio {
-    
+    public LocalDateTime dataOrcamento;
+    public Double valorBrutoPedido;
+    public Double valorImposto;
+    public Double totalDesconto;
+    public Double valorPago;
 }

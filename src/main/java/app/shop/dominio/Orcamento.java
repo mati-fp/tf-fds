@@ -1,5 +1,6 @@
 package app.shop.dominio;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,6 +14,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 
@@ -29,6 +32,9 @@ public class Orcamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pedido_id", unique = true, nullable = false)
     private Long pedidoId;
+
+    @Column(name = "nome_cliente")
+    private String nomeCliente;
 
     @Column(name = "custo_pedido")
     private Double custoPedido;
@@ -47,6 +53,25 @@ public class Orcamento {
 
     @OneToMany(mappedBy = "orcamento")
     private List<ItemPedido> itensPedido;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
     public Orcamento() {}
 
@@ -114,6 +139,24 @@ public class Orcamento {
         this.itensPedido = itensPedido;
     }
 
-    
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
+
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
 }
 

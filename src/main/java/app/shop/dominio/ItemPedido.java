@@ -30,6 +30,12 @@ public class ItemPedido {
 
     public ItemPedido() {}
 
+    public ItemPedido(Produto produto, Integer quantidade, Orcamento orcamento) {
+        this.quantidade = quantidade;
+        this.orcamento = orcamento;
+        this.produto = produto;
+    }
+
     public Long getId() {
         return id;
     }
