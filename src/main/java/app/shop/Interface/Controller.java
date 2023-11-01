@@ -39,15 +39,6 @@ public class Controller {
         return produtosDisponiveis_UC.prodDisponiveis();
     }
 
-
-    @PostMapping("cadastrarProdutos")
-    @CrossOrigin("*")
-    public Produto cadastraProduto(@RequestBody final ProdutoDto produto){
-        Produto produtoSalvo = produtosDisponiveis_UC.salvaProdutoNovo(produto);
-        return produtoSalvo;
-
-    }
-
     @PostMapping("fazPedido")
     @CrossOrigin("*")
     public Orcamento fazPedido(@RequestBody final PedidoDto pedidoDto){

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.shop.Interface.ItemPedidoDto;
-import app.shop.Interface.ProdutoDto;
 
 @Service
 public class ServicoEstoque {
@@ -23,23 +22,7 @@ public class ServicoEstoque {
         return (List<Produto>) produtosRep.findAll();
     }
 
-    public Produto salvaProdutoNovo(ProdutoDto produto){
-        Produto produtoSalvo = new Produto();
-        produtoSalvo.setDescricao(produto.descricao);
-        produtoSalvo.setPrecoUnitario(produto.precoUnitario);
-        produtoSalvo = produtosRep.save(produtoSalvo);
-
-        ItemDeEstoque itemEstoque = new ItemDeEstoque();
-        itemEstoque.setProduto(produtoSalvo);
-        itemEstoque.setQuantidadeAtual(1000);
-        itemEstoque.setEstoqueMinimo(50);
-        itemEstoque.setEstoqueMaximo(5000);
-        itemEstoqueRep.save(itemEstoque);
-        
-        return produtoSalvo;
-    }
-
-     public List<Produto> verificaProdutos(List<ItemPedidoDto> itens) {
+    public List<Produto> verificaProdutos(List<ItemPedidoDto> itens) {
         List<Produto> produtos = new ArrayList<>();
         
         for (ItemPedidoDto item : itens) {
