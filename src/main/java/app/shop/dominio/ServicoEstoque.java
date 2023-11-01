@@ -1,4 +1,4 @@
-package app.shop.aplicacao;
+package app.shop.dominio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,13 +9,6 @@ import org.springframework.stereotype.Service;
 
 import app.shop.Interface.ItemPedidoDto;
 import app.shop.Interface.ProdutoDto;
-import app.shop.dominio.IRepItemDeEstoque;
-import app.shop.dominio.IRepItemPedido;
-import app.shop.dominio.IRepProdutos;
-import app.shop.dominio.ItemDeEstoque;
-import app.shop.dominio.ItemPedido;
-import app.shop.dominio.Orcamento;
-import app.shop.dominio.Produto;
 
 @Service
 public class ServicoEstoque {

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import app.shop.Interface.PedidoDto;
 import app.shop.dominio.Orcamento;
 import app.shop.dominio.Produto;
+import app.shop.dominio.ServicoEstoque;
+import app.shop.dominio.ServicoVendas;
 
 @Component
 public class SolicitarOrcamento {
