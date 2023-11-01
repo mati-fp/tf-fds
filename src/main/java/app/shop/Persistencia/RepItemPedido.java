@@ -12,7 +12,7 @@ import app.shop.dominio.ItemPedido;
 import app.shop.dominio.Orcamento;
 
 @Repository
-@Primary
+
 public class RepItemPedido {
 
     @Autowired

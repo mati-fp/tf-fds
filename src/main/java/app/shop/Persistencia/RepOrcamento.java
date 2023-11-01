@@ -12,7 +12,7 @@ import app.shop.dominio.IRepOrcamento;
 import app.shop.dominio.Orcamento;
 
 @Repository
-@Primary
+
 public class RepOrcamento {
 
     @Autowired

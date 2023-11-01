@@ -56,7 +56,7 @@ public class ServicoEstoque {
             }
 
             Produto produto = produtoOpt.get();
-            Optional<ItemDeEstoque> itemDeEstoqueOpt = itemEstoqueRep.findByCodProduto(produto.getCodigo());
+            Optional<ItemDeEstoque> itemDeEstoqueOpt = itemEstoqueRep.findByProduto(produto);
 
             if (itemDeEstoqueOpt.isEmpty() || itemDeEstoqueOpt.get().getQuantidadeAtual() < item.quantidade) {
                 throw new RuntimeException("Quantidade insuficiente para o produto: " + produto.getDescricao());
@@ -69,10 +69,10 @@ public class ServicoEstoque {
     }
 
     public Boolean buscaProdutosPorNPedido(Orcamento pedido) {
-        List<ItemPedido> itens = itemPedidoRep.findByPedidoId(pedido.getPedidoId());
+        List<ItemPedido> itens = itemPedidoRep.findByOrcamento(pedido);
         for (ItemPedido item : itens) {
-            Long codigoProduto = item.getProduto().getCodigo();
-            Optional<ItemDeEstoque> itemEstoqueOpt = itemEstoqueRep.findByCodProduto(codigoProduto);
+            Produto codigoProduto = produtosRep.findById(item.getProduto().getCodigo()).get();
+            Optional<ItemDeEstoque> itemEstoqueOpt = itemEstoqueRep.findByProduto(codigoProduto);
             
             if (itemEstoqueOpt.isEmpty()) {
                 return false;

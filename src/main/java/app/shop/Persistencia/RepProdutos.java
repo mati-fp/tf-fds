@@ -11,7 +11,7 @@ import app.shop.dominio.IRepProdutos;
 import app.shop.dominio.Produto;
 
 @Repository
-@Primary
+
 public class RepProdutos {
 
     @Autowired

@@ -18,7 +18,7 @@ public class ServicoRelatorio {
 
     public List<Relatorio> gerarRelatorioUltimosOrcamentos(int n) {
         Pageable limit = PageRequest.of(0, n);
-        List<Orcamento> orcamentos = repOrcamento.findTopNByEfetivadoOrderByDataOrcamentoDesc(true, limit);
+        List<Orcamento> orcamentos = repOrcamento.findTopNByEfetivadoOrderByCreatedAtDesc(true, limit);
 
         return orcamentos.stream().map(orcamento -> {
             Relatorio dto = new Relatorio();
