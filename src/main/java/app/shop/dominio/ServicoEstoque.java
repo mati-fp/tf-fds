@@ -8,28 +8,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.shop.adaptorsInterfaces.dto.ItemPedidoDto;
-import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepItemDeEstoque;
-import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepItemPedido;
-import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepProdutos;
+import app.shop.adaptorsInterfaces.repositorio.RepItemDeEstoque;
+import app.shop.adaptorsInterfaces.repositorio.RepItemPedido;
+import app.shop.adaptorsInterfaces.repositorio.RepProdutos;
 
 @Service
 public class ServicoEstoque {
     @Autowired
-    private IRepProdutos produtosRep;
+    private RepProdutos produtosRep;
     @Autowired
-    private IRepItemDeEstoque itemEstoqueRep;
+    private RepItemDeEstoque itemEstoqueRep;
     @Autowired
-    private IRepItemPedido itemPedidoRep;
+    private RepItemPedido itemPedidoRep;
 
     public List<Produto> produtosDisponiveis(){
-        return (List<Produto>) produtosRep.findAll();
+        return produtosRep.findAll();
     }
 
     public List<Produto> verificaProdutos(List<ItemPedidoDto> itens) {
         List<Produto> produtos = new ArrayList<>();
         
         for (ItemPedidoDto item : itens) {
-            Optional<Produto> produtoOpt = produtosRep.findById(item.codigo_produto.longValue());
+            Optional<Produto> produtoOpt = produtosRep.findById(item.codigo_produto);
             if (produtoOpt.isEmpty()) {
                 throw new RuntimeException("Produto não encontrado");
             }

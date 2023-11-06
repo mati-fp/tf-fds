@@ -1,7 +1,6 @@
 package app.shop.adaptorsInterfaces.repositorio;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -12,7 +11,7 @@ import app.shop.dominio.ItemPedido;
 import app.shop.dominio.Orcamento;
 
 @Repository
-
+@Primary
 public class RepItemPedido {
 
     @Autowired
@@ -22,4 +21,11 @@ public class RepItemPedido {
         itemPedidoRep.saveAll(entities);
     }
     
+    public List<ItemPedido> findByOrcamento(Orcamento orcamento){
+        return itemPedidoRep.findByOrcamento(orcamento);
+    }
+
+    public void save(ItemPedido itemPedido){
+        itemPedidoRep.save(itemPedido);
+    }
 }

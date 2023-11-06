@@ -9,16 +9,16 @@ import org.springframework.stereotype.Service;
 
 import app.shop.adaptorsInterfaces.dto.ItemPedidoDto;
 import app.shop.adaptorsInterfaces.dto.PedidoDto;
-import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepItemPedido;
-import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepOrcamento;
+import app.shop.adaptorsInterfaces.repositorio.RepItemPedido;
+import app.shop.adaptorsInterfaces.repositorio.RepOrcamento;
 
 @Service
 public class ServicoVendas {
     
     @Autowired
-    private IRepOrcamento orcamentoRep;
+    private RepOrcamento orcamentoRep;
     @Autowired
-    private IRepItemPedido itemPedidoRep;
+    private RepItemPedido itemPedidoRep;
 
     public Orcamento geraOrcamento(PedidoDto pedidoDto, List<Produto> produtos) {
         try {
@@ -77,7 +77,7 @@ public class ServicoVendas {
     public Orcamento buscaOrcamento(String orcamentoIdStr) {
         try {
             UUID orcamentoId = UUID.fromString(orcamentoIdStr);
-            Orcamento orcamento = orcamentoRep.findById(orcamentoId).orElseThrow(() -> new RuntimeException("Orçamento não encontrado"));
+            Orcamento orcamento = orcamentoRep.findById(orcamentoId);
             return orcamento;
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("ID de orçamento inválido: " + orcamentoIdStr);
