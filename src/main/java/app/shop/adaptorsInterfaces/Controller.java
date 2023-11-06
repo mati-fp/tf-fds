@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.shop.adaptorsInterfaces.dto.PedidoDto;
+import app.shop.adaptorsInterfaces.entity.Orcamento;
+import app.shop.adaptorsInterfaces.entity.Produto;
 import app.shop.aplicacao.relatorios.Relatorio;
 import app.shop.aplicacao.useCases.EfetivarOrcamento;
 import app.shop.aplicacao.useCases.GerarRelatorio;
 import app.shop.aplicacao.useCases.ProdutosDisponiveis;
 import app.shop.aplicacao.useCases.SolicitarOrcamento;
-import app.shop.dominio.Orcamento;
-import app.shop.dominio.Produto;
 
 
 

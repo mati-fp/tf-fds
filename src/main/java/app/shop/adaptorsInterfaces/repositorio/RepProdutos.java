@@ -7,15 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepProdutos;
-import app.shop.dominio.Produto;
+import app.shop.adaptorsInterfaces.entity.Produto;
+import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepProdutosJPA;
+import app.shop.dominio.IRepProduto;
 
 @Repository
 @Primary
-public class RepProdutos {
+public class RepProdutos implements IRepProduto{
 
     @Autowired
-    private IRepProdutos repProdutos;
+    private IRepProdutosJPA repProdutos;
 
     public List<Produto> findAll(){
         return (List<Produto>) repProdutos.findAll();

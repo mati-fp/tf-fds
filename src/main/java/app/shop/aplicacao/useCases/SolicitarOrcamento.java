@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.shop.adaptorsInterfaces.dto.PedidoDto;
-import app.shop.dominio.Orcamento;
-import app.shop.dominio.Produto;
+import app.shop.adaptorsInterfaces.entity.Orcamento;
+import app.shop.adaptorsInterfaces.entity.Produto;
 import app.shop.dominio.ServicoEstoque;
 import app.shop.dominio.ServicoVendas;
 

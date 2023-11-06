@@ -3,7 +3,7 @@ package app.shop.aplicacao.useCases;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import app.shop.dominio.Orcamento;
+import app.shop.adaptorsInterfaces.entity.Orcamento;
 import app.shop.dominio.ServicoEstoque;
 import app.shop.dominio.ServicoVendas;
 

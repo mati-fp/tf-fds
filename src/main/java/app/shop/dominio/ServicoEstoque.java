@@ -8,18 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.shop.adaptorsInterfaces.dto.ItemPedidoDto;
-import app.shop.adaptorsInterfaces.repositorio.RepItemDeEstoque;
-import app.shop.adaptorsInterfaces.repositorio.RepItemPedido;
-import app.shop.adaptorsInterfaces.repositorio.RepProdutos;
+import app.shop.adaptorsInterfaces.entity.ItemDeEstoque;
+import app.shop.adaptorsInterfaces.entity.ItemPedido;
+import app.shop.adaptorsInterfaces.entity.Orcamento;
+import app.shop.adaptorsInterfaces.entity.Produto;
 
 @Service
 public class ServicoEstoque {
     @Autowired
-    private RepProdutos produtosRep;
+    private IRepProduto produtosRep;
     @Autowired
-    private RepItemDeEstoque itemEstoqueRep;
+    private IRepItemDeEstoque itemEstoqueRep;
     @Autowired
-    private RepItemPedido itemPedidoRep;
+    private IRepItemPedido itemPedidoRep;
 
     public List<Produto> produtosDisponiveis(){
         return produtosRep.findAll();

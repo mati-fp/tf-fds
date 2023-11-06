@@ -6,13 +6,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import app.shop.adaptorsInterfaces.repositorio.RepOrcamento;
-import app.shop.dominio.Orcamento;
+import app.shop.adaptorsInterfaces.entity.Orcamento;
+import app.shop.dominio.IRepOrcamento;
 
 @Component
 public class ServicoRelatorio {
     @Autowired
-    private RepOrcamento repOrcamento;
+    private IRepOrcamento repOrcamento;
 
     public List<Relatorio> gerarRelatorioUltimosOrcamentos(int n) {
         List<Orcamento> orcamentos = repOrcamento.findTopNByEfetivadoOrderByCreatedAtDesc(n);

@@ -1,4 +1,4 @@
-package app.shop.dominio;
+package app.shop.adaptorsInterfaces.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

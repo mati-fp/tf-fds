@@ -3,7 +3,6 @@ package app.shop.adaptorsInterfaces.repositorio;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -11,15 +10,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepOrcamento;
-import app.shop.dominio.Orcamento;
+import app.shop.adaptorsInterfaces.entity.Orcamento;
+import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepOrcamentoJPA;
+import app.shop.dominio.IRepOrcamento;
 
 @Repository
 @Primary
-public class RepOrcamento {
+public class RepOrcamento implements IRepOrcamento{
 
     @Autowired
-    private IRepOrcamento orcamentoRep;
+    private IRepOrcamentoJPA orcamentoRep;
 
     public void save(Orcamento orcamento){
         orcamentoRep.save(orcamento);

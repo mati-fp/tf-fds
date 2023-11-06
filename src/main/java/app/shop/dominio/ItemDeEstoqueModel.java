@@ -1,37 +1,16 @@
 package app.shop.dominio;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+public class ItemDeEstoqueModel {
 
-@Entity
-@Table(name = "item_de_estoque")
-public class ItemDeEstoque {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
-    @Column(name = "quantidade_atual")
     private Integer quantidadeAtual;
-
-    @Column(name = "estoque_minimo")
+    
     private Integer estoqueMinimo;
-
-    @Column(name = "estoque_maximo")
+    
     private Integer estoqueMaximo;
 
-    @OneToOne
-    @JoinColumn(name = "cod_produto")
-    private Produto produto;
-
-    public ItemDeEstoque() {}
+    private ProdutoModel produto;
 
     public Long getId() {
         return id;
@@ -65,11 +44,11 @@ public class ItemDeEstoque {
         this.estoqueMaximo = estoqueMaximo;
     }
 
-    public Produto getProduto() {
+    public ProdutoModel getProduto() {
         return produto;
     }
 
-    public void setProduto(Produto produto) {
+    public void setProduto(ProdutoModel produto) {
         this.produto = produto;
     }
 

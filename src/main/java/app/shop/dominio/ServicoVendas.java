@@ -9,16 +9,17 @@ import org.springframework.stereotype.Service;
 
 import app.shop.adaptorsInterfaces.dto.ItemPedidoDto;
 import app.shop.adaptorsInterfaces.dto.PedidoDto;
-import app.shop.adaptorsInterfaces.repositorio.RepItemPedido;
-import app.shop.adaptorsInterfaces.repositorio.RepOrcamento;
+import app.shop.adaptorsInterfaces.entity.ItemPedido;
+import app.shop.adaptorsInterfaces.entity.Orcamento;
+import app.shop.adaptorsInterfaces.entity.Produto;
 
 @Service
 public class ServicoVendas {
     
     @Autowired
-    private RepOrcamento orcamentoRep;
+    private IRepOrcamento orcamentoRep;
     @Autowired
-    private RepItemPedido itemPedidoRep;
+    private IRepItemPedido itemPedidoRep;
 
     public Orcamento geraOrcamento(PedidoDto pedidoDto, List<Produto> produtos) {
         try {
