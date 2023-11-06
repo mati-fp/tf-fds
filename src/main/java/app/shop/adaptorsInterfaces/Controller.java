@@ -16,7 +16,7 @@ import app.shop.adaptorsInterfaces.dto.PedidoDto;
 import app.shop.aplicacao.relatorios.Relatorio;
 import app.shop.aplicacao.useCases.EfetivarOrcamento;
 import app.shop.aplicacao.useCases.GerarRelatorio;
-import app.shop.aplicacao.useCases.ProdutosDisponiveis_UC;
+import app.shop.aplicacao.useCases.ProdutosDisponiveis;
 import app.shop.aplicacao.useCases.SolicitarOrcamento;
 import app.shop.dominio.Orcamento;
 import app.shop.dominio.Produto;
@@ -26,7 +26,7 @@ import app.shop.dominio.Produto;
 @RestController
 public class Controller {
     @Autowired
-    private ProdutosDisponiveis_UC produtosDisponiveis_UC;
+    private ProdutosDisponiveis produtosDisponiveis;
     @Autowired
     private SolicitarOrcamento solicitarOrcamento;
     @Autowired
@@ -37,7 +37,7 @@ public class Controller {
     @GetMapping("produtosDisponiveis")
     @CrossOrigin("*")
     public List<Produto> produtosDisponiveis(){
-        return produtosDisponiveis_UC.prodDisponiveis();
+        return produtosDisponiveis.prodDisponiveis();
     }
 
     @PostMapping("fazPedido")

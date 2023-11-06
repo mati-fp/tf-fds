@@ -9,7 +9,7 @@ import app.shop.dominio.Produto;
 import app.shop.dominio.ServicoEstoque;
 
 @Component
-public class ProdutosDisponiveis_UC {
+public class ProdutosDisponiveis {
     @Autowired
     private ServicoEstoque servicoEstoque;
 
