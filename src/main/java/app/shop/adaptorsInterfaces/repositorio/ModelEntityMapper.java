@@ -55,17 +55,25 @@ public class ModelEntityMapper {
 
     public static Orcamento orcamentoToEntity (OrcamentoModel orcamentoModel){
         Orcamento orcamento = new Orcamento();
-        orcamento.setNomeCliente(orcamentoModel.getNomeCliente());
-        List<ItemPedido> itensPedido = new ArrayList<ItemPedido>();
-        for (ItemPedidoModel itemPedidoModel : orcamentoModel.getItensPedido()) {
-            itensPedido.add(itemPedidoToEntity(itemPedidoModel));
+        if (orcamentoModel.getId() != null && orcamentoModel.getPedidoId() != null) {
+            orcamento.setId(orcamentoModel.getId());
+            orcamento.setPedidoId(orcamentoModel.getPedidoId());
         }
-        orcamento.setItensPedido(itensPedido);
-        orcamento.setCustoPedido(orcamentoModel.getCustoPedido());
-        orcamento.setCustoImposto(orcamentoModel.getCustoImposto());
-        orcamento.setDesconto(orcamentoModel.getDesconto());
-        orcamento.setTotalPagar(orcamentoModel.getTotalPagar());
-        orcamento.setEfetivado(orcamentoModel.getEfetivado());
+        orcamento.setNomeCliente(orcamentoModel.getNomeCliente());
+        if (orcamentoModel.getItensPedido() != null) {
+            List<ItemPedido> itensPedido = new ArrayList<ItemPedido>();
+            for (ItemPedidoModel itemPedidoModel : orcamentoModel.getItensPedido()) {
+                itensPedido.add(itemPedidoToEntity(itemPedidoModel));
+            }
+            orcamento.setItensPedido(itensPedido);
+        }
+        if (orcamentoModel.getTotalPagar() != null) {
+            orcamento.setCustoPedido(orcamentoModel.getCustoPedido());
+            orcamento.setCustoImposto(orcamentoModel.getCustoImposto());
+            orcamento.setDesconto(orcamentoModel.getDesconto());
+            orcamento.setTotalPagar(orcamentoModel.getTotalPagar());
+            orcamento.setEfetivado(orcamentoModel.getEfetivado());
+        }
         return orcamento;
     }
 

@@ -20,12 +20,15 @@ public class SolicitarOrcamento {
     private ServicoVendas servicoVendas;
 
     public OrcamentoModel fazPedido(PedidoDto pedidoDto){
-        List<ProdutoModel> produtos = servicoEstoque.verificaProdutos(pedidoDto.itens);
-        if(produtos.size() == pedidoDto.itens.size()){
-            OrcamentoModel orcamento = servicoVendas.geraOrcamento(pedidoDto, produtos);
-            return orcamento;
+        try {
+            List<ProdutoModel> produtos = servicoEstoque.verificaProdutos(pedidoDto.itens);
+            if(produtos.size() == pedidoDto.itens.size()){
+                OrcamentoModel orcamento = servicoVendas.geraOrcamento(pedidoDto, produtos);
+                return orcamento;
+            }
+        } catch (Exception e) {
+            throw e;
         }
-
         throw new RuntimeException("Não tem produtos suficientes");
         
     }
