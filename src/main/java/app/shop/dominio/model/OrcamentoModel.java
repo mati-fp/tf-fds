@@ -4,11 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import app.shop.adaptorsInterfaces.entity.ItemPedido;
-
-import java.util.List;
-import java.util.UUID;
-
 public class OrcamentoModel {
 
     private UUID id;

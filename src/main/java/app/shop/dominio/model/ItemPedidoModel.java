@@ -1,6 +1,5 @@
 package app.shop.dominio.model;
 
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 
 public class ItemPedidoModel {
 
