@@ -7,11 +7,13 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.shop.adaptorsInterfaces.dto.ItemPedidoDto;
-import app.shop.adaptorsInterfaces.dto.PedidoDto;
-import app.shop.adaptorsInterfaces.entity.ItemPedido;
-import app.shop.adaptorsInterfaces.entity.Orcamento;
-import app.shop.adaptorsInterfaces.entity.Produto;
+import app.shop.dominio.dto.ItemPedidoDto;
+import app.shop.dominio.dto.PedidoDto;
+import app.shop.dominio.model.ItemPedidoModel;
+import app.shop.dominio.model.OrcamentoModel;
+import app.shop.dominio.model.ProdutoModel;
+import app.shop.dominio.repositoryInterface.IRepItemPedido;
+import app.shop.dominio.repositoryInterface.IRepOrcamento;
 
 @Service
 public class ServicoVendas {
@@ -21,22 +23,22 @@ public class ServicoVendas {
     @Autowired
     private IRepItemPedido itemPedidoRep;
 
-    public Orcamento geraOrcamento(PedidoDto pedidoDto, List<Produto> produtos) {
+    public OrcamentoModel geraOrcamento(PedidoDto pedidoDto, List<ProdutoModel> produtos) {
         try {
             // Criando o orçamento inicial
-            Orcamento orcamento = new Orcamento();
+            OrcamentoModel orcamento = new OrcamentoModel();
             orcamento.setNomeCliente(pedidoDto.nomeCliente);
-            orcamentoRep.save(orcamento);
+            orcamento = orcamentoRep.save(orcamento);
         
             // Lista para armazenar os itens do pedido
-            List<ItemPedido> itens = new ArrayList<>();
+            List<ItemPedidoModel> itens = new ArrayList<>();
         
             // Variável para armazenar o custo total do pedido
             double custoTotalPedido = 0;
         
             // Processamento dos itens do pedido
             for (ItemPedidoDto itemPedidoDto : pedidoDto.itens) {
-                Produto produto = produtos.stream()
+                ProdutoModel produto = produtos.stream()
                     .filter(p -> p.getCodigo().equals(itemPedidoDto.codigo_produto))
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
@@ -44,8 +46,8 @@ public class ServicoVendas {
                 double custoItem = produto.getPrecoUnitario() * itemPedidoDto.quantidade;
                 custoTotalPedido += custoItem;
             
-                ItemPedido itemPedido = new ItemPedido(produto, itemPedidoDto.quantidade, orcamento);
-                itemPedidoRep.save(itemPedido);
+                ItemPedidoModel itemPedido = new ItemPedidoModel(produto, itemPedidoDto.quantidade, orcamento);
+                itemPedido = itemPedidoRep.save(itemPedido);
                 itens.add(itemPedido);
             }
         
@@ -55,19 +57,20 @@ public class ServicoVendas {
         
             // Calculando total a pagar
             double totalPagar = custoTotalPedido + imposto - desconto;
-        
+
             // Atualizando o orçamento com os valores calculados
             orcamento.setCustoPedido(custoTotalPedido);
             orcamento.setCustoImposto(imposto);
             orcamento.setDesconto(desconto);
             orcamento.setTotalPagar(totalPagar);
-            orcamentoRep.save(orcamento);
-        
+            orcamento = orcamentoRep.save(orcamento);
+
             // Associando o orçamento a cada item do pedido
-            itens.forEach(item -> {
-                item.setOrcamento(orcamento);
-                itemPedidoRep.save(item);
-            });
+            for (ItemPedidoModel item : itens) {
+                ItemPedidoModel currentItem = item;
+                currentItem.setOrcamento(orcamento);
+                itemPedidoRep.save(currentItem);
+            }
         
             return orcamento;
         } catch (Exception e) {
@@ -75,10 +78,10 @@ public class ServicoVendas {
         }
     }
 
-    public Orcamento buscaOrcamento(String orcamentoIdStr) {
+    public OrcamentoModel buscaOrcamento(String orcamentoIdStr) {
         try {
             UUID orcamentoId = UUID.fromString(orcamentoIdStr);
-            Orcamento orcamento = orcamentoRep.findById(orcamentoId);
+            OrcamentoModel orcamento = orcamentoRep.findById(orcamentoId);
             return orcamento;
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("ID de orçamento inválido: " + orcamentoIdStr);
@@ -87,7 +90,7 @@ public class ServicoVendas {
         }
     }
 
-    public void setEfetivado(Orcamento orcamento){
+    public void setEfetivado(OrcamentoModel orcamento){
         orcamento.setEfetivado(true);
         orcamentoRep.save(orcamento);
     }

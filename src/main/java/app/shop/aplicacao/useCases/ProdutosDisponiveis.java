@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import app.shop.adaptorsInterfaces.entity.Produto;
 import app.shop.dominio.ServicoEstoque;
+import app.shop.dominio.model.ProdutoModel;
 
 @Component
 public class ProdutosDisponiveis {
@@ -14,7 +14,7 @@ public class ProdutosDisponiveis {
     private ServicoEstoque servicoEstoque;
 
 
-    public List<Produto> prodDisponiveis(){
+    public List<ProdutoModel> prodDisponiveis(){
         return servicoEstoque.produtosDisponiveis();
     }
 

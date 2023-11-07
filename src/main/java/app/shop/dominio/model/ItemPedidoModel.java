@@ -1,5 +1,6 @@
-package app.shop.dominio;
+package app.shop.dominio.model;
 
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 
 public class ItemPedidoModel {
 
@@ -10,6 +11,14 @@ public class ItemPedidoModel {
     private OrcamentoModel orcamento;
 
     private ProdutoModel produto;
+
+    public ItemPedidoModel(ProdutoModel produto, Integer quantidade, OrcamentoModel orcamento) {
+        this.produto = produto;
+        this.quantidade = quantidade;
+        this.orcamento = orcamento;
+    }
+
+    public ItemPedidoModel() {}
 
     public Long getId() {
         return id;

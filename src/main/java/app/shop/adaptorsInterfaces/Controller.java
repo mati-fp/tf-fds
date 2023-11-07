@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.shop.adaptorsInterfaces.dto.PedidoDto;
-import app.shop.adaptorsInterfaces.entity.Orcamento;
-import app.shop.adaptorsInterfaces.entity.Produto;
 import app.shop.aplicacao.relatorios.Relatorio;
 import app.shop.aplicacao.useCases.EfetivarOrcamento;
 import app.shop.aplicacao.useCases.GerarRelatorio;
 import app.shop.aplicacao.useCases.ProdutosDisponiveis;
 import app.shop.aplicacao.useCases.SolicitarOrcamento;
+import app.shop.dominio.dto.PedidoDto;
+import app.shop.dominio.model.OrcamentoModel;
+import app.shop.dominio.model.ProdutoModel;
 
 
 
@@ -36,15 +36,15 @@ public class Controller {
 
     @GetMapping("produtosDisponiveis")
     @CrossOrigin("*")
-    public List<Produto> produtosDisponiveis(){
+    public List<ProdutoModel> produtosDisponiveis(){
         return produtosDisponiveis.prodDisponiveis();
     }
 
     @PostMapping("fazPedido")
     @CrossOrigin("*")
-    public Orcamento fazPedido(@RequestBody final PedidoDto pedidoDto){
+    public OrcamentoModel fazPedido(@RequestBody final PedidoDto pedidoDto){
         try {
-            Orcamento orcamento = solicitarOrcamento.fazPedido(pedidoDto);
+            OrcamentoModel orcamento = solicitarOrcamento.fazPedido(pedidoDto);
             return orcamento;
         } catch (Exception e) {
             throw e;

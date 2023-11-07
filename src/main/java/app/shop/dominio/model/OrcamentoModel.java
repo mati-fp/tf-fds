@@ -1,4 +1,4 @@
-package app.shop.dominio;
+package app.shop.dominio.model;
 
 import java.time.LocalDateTime;
 import java.util.List;

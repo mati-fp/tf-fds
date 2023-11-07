@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import app.shop.adaptorsInterfaces.entity.Orcamento;
-import app.shop.dominio.IRepOrcamento;
+import app.shop.dominio.model.OrcamentoModel;
+import app.shop.dominio.repositoryInterface.IRepOrcamento;
 
 @Component
 public class ServicoRelatorio {
@@ -15,7 +15,7 @@ public class ServicoRelatorio {
     private IRepOrcamento repOrcamento;
 
     public List<Relatorio> gerarRelatorioUltimosOrcamentos(int n) {
-        List<Orcamento> orcamentos = repOrcamento.findTopNByEfetivadoOrderByCreatedAtDesc(n);
+        List<OrcamentoModel> orcamentos = repOrcamento.findTopNByEfetivadoOrderByCreatedAtDesc(n);
 
         return orcamentos.stream().map(orcamento -> {
             Relatorio dto = new Relatorio();

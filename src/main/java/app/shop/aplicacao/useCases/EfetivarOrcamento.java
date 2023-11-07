@@ -3,9 +3,9 @@ package app.shop.aplicacao.useCases;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import app.shop.adaptorsInterfaces.entity.Orcamento;
 import app.shop.dominio.ServicoEstoque;
 import app.shop.dominio.ServicoVendas;
+import app.shop.dominio.model.OrcamentoModel;
 
 @Component
 public class EfetivarOrcamento {
@@ -17,7 +17,7 @@ public class EfetivarOrcamento {
         
 
     public String fazPagamento(String orcamentoId) {
-        Orcamento orcamento = servicoVendas.buscaOrcamento(orcamentoId);
+        OrcamentoModel orcamento = servicoVendas.buscaOrcamento(orcamentoId);
         Boolean efetiva = servicoEstoque.buscaProdutosPorNPedido(orcamento);
         if (efetiva) {
             servicoVendas.setEfetivado(orcamento);

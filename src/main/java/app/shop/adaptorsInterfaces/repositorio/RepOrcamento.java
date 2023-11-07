@@ -11,8 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import app.shop.adaptorsInterfaces.entity.Orcamento;
-import app.shop.adaptorsInterfaces.interfacesRepositorio.IRepOrcamentoJPA;
-import app.shop.dominio.IRepOrcamento;
+import app.shop.adaptorsInterfaces.interfacesJPA.IRepOrcamentoJPA;
+import app.shop.dominio.model.OrcamentoModel;
+import app.shop.dominio.repositoryInterface.IRepOrcamento;
 
 @Repository
 @Primary
@@ -21,20 +22,31 @@ public class RepOrcamento implements IRepOrcamento{
     @Autowired
     private IRepOrcamentoJPA orcamentoRep;
 
-    public void save(Orcamento orcamento){
-        orcamentoRep.save(orcamento);
+    public OrcamentoModel save(OrcamentoModel orcamentoModel){
+        Orcamento orcamentoEntity = ModelEntityMapper.orcamentoToEntity(orcamentoModel);
+        orcamentoEntity = orcamentoRep.save(orcamentoEntity);
+        return ModelEntityMapper.orcamentoToModel(orcamentoEntity);
     }
 
-    public Orcamento findById(UUID orcamentoId) throws RuntimeException{
+    public OrcamentoModel findById(UUID orcamentoId) throws RuntimeException{
         Optional<Orcamento> orcamentoOpt = orcamentoRep.findById(orcamentoId);
         if (orcamentoOpt.isEmpty()) {
             throw new RuntimeException("Orcamento não encontrado");
         }
-        return orcamentoOpt.get();
+        return ModelEntityMapper.orcamentoToModel(orcamentoOpt.get());
     }
     
-    public List<Orcamento> findTopNByEfetivadoOrderByCreatedAtDesc(int n){
+    public List<OrcamentoModel> findTopNByEfetivadoOrderByCreatedAtDesc(int n){
         Pageable limit = PageRequest.of(0, n);
-        return orcamentoRep.findTopNByEfetivadoOrderByCreatedAtDesc(true, limit);
+
+        List<Orcamento> orcamentosEntity = orcamentoRep.findTopNByEfetivadoOrderByCreatedAtDesc(true, limit);
+
+        List<OrcamentoModel> orcamentosModel = List.of();
+
+        for (Orcamento orcamento : orcamentosEntity) {
+            orcamentosModel.add(ModelEntityMapper.orcamentoToModel(orcamento));
+        }
+
+        return orcamentosModel;
     }
 }

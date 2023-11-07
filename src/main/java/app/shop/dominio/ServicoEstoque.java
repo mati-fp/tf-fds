@@ -7,11 +7,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.shop.adaptorsInterfaces.dto.ItemPedidoDto;
-import app.shop.adaptorsInterfaces.entity.ItemDeEstoque;
-import app.shop.adaptorsInterfaces.entity.ItemPedido;
-import app.shop.adaptorsInterfaces.entity.Orcamento;
-import app.shop.adaptorsInterfaces.entity.Produto;
+import app.shop.dominio.dto.ItemPedidoDto;
+import app.shop.dominio.model.ItemDeEstoqueModel;
+import app.shop.dominio.model.ItemPedidoModel;
+import app.shop.dominio.model.OrcamentoModel;
+import app.shop.dominio.model.ProdutoModel;
+import app.shop.dominio.repositoryInterface.IRepItemDeEstoque;
+import app.shop.dominio.repositoryInterface.IRepItemPedido;
+import app.shop.dominio.repositoryInterface.IRepProduto;
 
 @Service
 public class ServicoEstoque {
@@ -22,21 +25,21 @@ public class ServicoEstoque {
     @Autowired
     private IRepItemPedido itemPedidoRep;
 
-    public List<Produto> produtosDisponiveis(){
+    public List<ProdutoModel> produtosDisponiveis(){
         return produtosRep.findAll();
     }
 
-    public List<Produto> verificaProdutos(List<ItemPedidoDto> itens) {
-        List<Produto> produtos = new ArrayList<>();
+    public List<ProdutoModel> verificaProdutos(List<ItemPedidoDto> itens) {
+        List<ProdutoModel> produtos = new ArrayList<>();
         
         for (ItemPedidoDto item : itens) {
-            Optional<Produto> produtoOpt = produtosRep.findById(item.codigo_produto);
+            Optional<ProdutoModel> produtoOpt = produtosRep.findById(item.codigo_produto);
             if (produtoOpt.isEmpty()) {
                 throw new RuntimeException("Produto não encontrado");
             }
 
-            Produto produto = produtoOpt.get();
-            Optional<ItemDeEstoque> itemDeEstoqueOpt = itemEstoqueRep.findByProduto(produto);
+            ProdutoModel produto = produtoOpt.get();
+            Optional<ItemDeEstoqueModel> itemDeEstoqueOpt = itemEstoqueRep.findByProduto(produto);
 
             if (itemDeEstoqueOpt.isEmpty() || itemDeEstoqueOpt.get().getQuantidadeAtual() < item.quantidade) {
                 throw new RuntimeException("Quantidade insuficiente para o produto: " + produto.getDescricao());
@@ -48,16 +51,16 @@ public class ServicoEstoque {
         return produtos;
     }
 
-    public Boolean buscaProdutosPorNPedido(Orcamento pedido) {
-        List<ItemPedido> itens = itemPedidoRep.findByOrcamento(pedido);
-        for (ItemPedido item : itens) {
-            Produto codigoProduto = produtosRep.findById(item.getProduto().getCodigo()).get();
-            Optional<ItemDeEstoque> itemEstoqueOpt = itemEstoqueRep.findByProduto(codigoProduto);
+    public Boolean buscaProdutosPorNPedido(OrcamentoModel pedido) {
+        List<ItemPedidoModel> itens = itemPedidoRep.findByOrcamento(pedido);
+        for (ItemPedidoModel item : itens) {
+            ProdutoModel codigoProduto = produtosRep.findById(item.getProduto().getCodigo()).get();
+            Optional<ItemDeEstoqueModel> itemEstoqueOpt = itemEstoqueRep.findByProduto(codigoProduto);
             
             if (itemEstoqueOpt.isEmpty()) {
                 return false;
             }
-            ItemDeEstoque itemEstoque = itemEstoqueOpt.get();
+            ItemDeEstoqueModel itemEstoque = itemEstoqueOpt.get();
             if (itemEstoque.getQuantidadeAtual() < item.getQuantidade()) {
                 return false;
             }

@@ -1,4 +1,4 @@
-package app.shop.dominio;
+package app.shop.dominio.model;
 
 public class ItemDeEstoqueModel {
 

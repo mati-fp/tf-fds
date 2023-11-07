@@ -1,4 +1,4 @@
-package app.shop.adaptorsInterfaces.interfacesRepositorio;
+package app.shop.adaptorsInterfaces.interfacesJPA;
 
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package app.shop.adaptorsInterfaces.dto;
+package app.shop.dominio.dto;
 
 public class ItemPedidoDto {
     public Long codigo_produto;
