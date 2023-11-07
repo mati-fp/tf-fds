@@ -20,12 +20,16 @@ public class RepItemDeEstoque implements IRepItemDeEstoque{
     @Autowired
     private IRepItemDeEstoqueJPA itemEstoqueRep;
 
-    public Optional<ItemDeEstoqueModel> findByProduto(ProdutoModel produtoModel){
+    public ItemDeEstoqueModel findByProduto(ProdutoModel produtoModel) throws RuntimeException{
         Produto produtoEntity = ModelEntityMapper.produtoToEntity(produtoModel);
 
         Optional<ItemDeEstoque> itemDeEstoque = itemEstoqueRep.findByProduto(produtoEntity);
 
-        return Optional.of(ModelEntityMapper.itemDeEstoqueToModel(itemDeEstoque.get()));
+        if (itemDeEstoque.isEmpty()) {
+            throw new RuntimeException("Produto não encontrado no estoque");
+        }
+
+        return ModelEntityMapper.itemDeEstoqueToModel(itemDeEstoque.get());
     }
 
     public ItemDeEstoqueModel save(ItemDeEstoqueModel itemDeEstoque){

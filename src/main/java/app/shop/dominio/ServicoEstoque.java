@@ -31,43 +31,43 @@ public class ServicoEstoque {
 
     public List<ProdutoModel> verificaProdutos(List<ItemPedidoDto> itens) {
         List<ProdutoModel> produtos = new ArrayList<>();
-        
-        for (ItemPedidoDto item : itens) {
-            Optional<ProdutoModel> produtoOpt = produtosRep.findById(item.codigo_produto);
-            if (produtoOpt.isEmpty()) {
-                throw new RuntimeException("Produto não encontrado");
+        try {
+            for (ItemPedidoDto item : itens) {
+                ProdutoModel produto = produtosRep.findById(item.codigo_produto);
+
+                ItemDeEstoqueModel itemDeEstoqueOpt = itemEstoqueRep.findByProduto(produto);
+
+                if (itemDeEstoqueOpt.getQuantidadeAtual() < item.quantidade) {
+                    throw new RuntimeException("Quantidade insuficiente para o produto: " + produto.getDescricao());
+                }
+
+                produtos.add(produto);
             }
-
-            ProdutoModel produto = produtoOpt.get();
-            Optional<ItemDeEstoqueModel> itemDeEstoqueOpt = itemEstoqueRep.findByProduto(produto);
-
-            if (itemDeEstoqueOpt.isEmpty() || itemDeEstoqueOpt.get().getQuantidadeAtual() < item.quantidade) {
-                throw new RuntimeException("Quantidade insuficiente para o produto: " + produto.getDescricao());
-            }
-
-            produtos.add(produto);
+        } catch (Exception e) {
+            throw e;
         }
 
         return produtos;
     }
 
     public Boolean buscaProdutosPorNPedido(OrcamentoModel pedido) {
-        List<ItemPedidoModel> itens = itemPedidoRep.findByOrcamento(pedido);
-        for (ItemPedidoModel item : itens) {
-            ProdutoModel codigoProduto = produtosRep.findById(item.getProduto().getCodigo()).get();
-            Optional<ItemDeEstoqueModel> itemEstoqueOpt = itemEstoqueRep.findByProduto(codigoProduto);
-            
-            if (itemEstoqueOpt.isEmpty()) {
-                return false;
+        try {
+            List<ItemPedidoModel> itens = itemPedidoRep.findByOrcamento(pedido);
+            for (ItemPedidoModel item : itens) {
+                ProdutoModel codigoProduto = produtosRep.findById(item.getProduto().getCodigo());
+                ItemDeEstoqueModel itemEstoque = itemEstoqueRep.findByProduto(codigoProduto);
+
+                if (itemEstoque.getQuantidadeAtual() < item.getQuantidade()) {
+                    return false;
+                }
+
+                itemEstoque.setQuantidadeAtual(itemEstoque.getQuantidadeAtual() - item.getQuantidade());
+                itemEstoqueRep.save(itemEstoque);
             }
-            ItemDeEstoqueModel itemEstoque = itemEstoqueOpt.get();
-            if (itemEstoque.getQuantidadeAtual() < item.getQuantidade()) {
-                return false;
-            }
-            itemEstoque.setQuantidadeAtual(itemEstoque.getQuantidadeAtual() - item.getQuantidade());
-            itemEstoqueRep.save(itemEstoque);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-        return true;
     }
     
     

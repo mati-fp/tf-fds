@@ -31,9 +31,13 @@ public class RepProdutos implements IRepProduto{
         return produtosModel;
     }
     
-    public Optional<ProdutoModel> findById(Long id){
+    public ProdutoModel findById(Long id) throws RuntimeException{
         Optional<Produto> produtoEntity = repProdutos.findById(id);
 
-        return Optional.of(ModelEntityMapper.produtoToModel(produtoEntity.get()));
+        if (produtoEntity.isEmpty()) {
+            throw new RuntimeException("Produto não encontrado");
+        }
+
+        return ModelEntityMapper.produtoToModel(produtoEntity.get());
     }
 }
