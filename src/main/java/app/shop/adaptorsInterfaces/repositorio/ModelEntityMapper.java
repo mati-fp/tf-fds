@@ -19,6 +19,7 @@ public class ModelEntityMapper {
     
     public static ItemDeEstoque itemDeEstoqueToEntity (ItemDeEstoqueModel itemDeEstoqueModel){
         ItemDeEstoque itemDeEstoque = new ItemDeEstoque();
+        itemDeEstoque.setId(itemDeEstoqueModel.getId());
         itemDeEstoque.setEstoqueMaximo(itemDeEstoqueModel.getEstoqueMaximo());
         itemDeEstoque.setEstoqueMinimo(itemDeEstoqueModel.getEstoqueMinimo());
         itemDeEstoque.setQuantidadeAtual(itemDeEstoqueModel.getQuantidadeAtual());
@@ -38,6 +39,7 @@ public class ModelEntityMapper {
 
     public static ItemPedido itemPedidoToEntity (ItemPedidoModel itemPedidoModel){
         ItemPedido itemPedido = new ItemPedido();
+        itemPedido.setId(itemPedidoModel.getId());
         itemPedido.setProduto(produtoToEntity(itemPedidoModel.getProduto()));
         itemPedido.setQuantidade(itemPedidoModel.getQuantidade());
         itemPedido.setOrcamento(orcamentoToEntity(itemPedidoModel.getOrcamento()));
@@ -66,8 +68,6 @@ public class ModelEntityMapper {
                 itensPedido.add(itemPedidoToEntity(itemPedidoModel));
             }
             orcamento.setItensPedido(itensPedido);
-        }
-        if (orcamentoModel.getTotalPagar() != null) {
             orcamento.setCustoPedido(orcamentoModel.getCustoPedido());
             orcamento.setCustoImposto(orcamentoModel.getCustoImposto());
             orcamento.setDesconto(orcamentoModel.getDesconto());
@@ -82,21 +82,24 @@ public class ModelEntityMapper {
         orcamentoModel.setId(orcamento.getId());
         orcamentoModel.setPedidoId(orcamento.getPedidoId());
         orcamentoModel.setNomeCliente(orcamento.getNomeCliente());
-        List<ItemPedidoModel> itensPedidoModel = new ArrayList<ItemPedidoModel>();
-        for (ItemPedido itemPedido : orcamento.getItensPedido()) {
-            itensPedidoModel.add(itemPedidoToModel(itemPedido));
+        if (orcamento.getItensPedido() != null) {
+            List<ItemPedidoModel> itensPedidoModel = new ArrayList<ItemPedidoModel>();
+            for (ItemPedido itemPedido : orcamento.getItensPedido()) {
+                itensPedidoModel.add(itemPedidoToModel(itemPedido));
+            }
+            orcamentoModel.setItensPedido(itensPedidoModel);
+            orcamentoModel.setCustoPedido(orcamento.getCustoPedido());
+            orcamentoModel.setCustoImposto(orcamento.getCustoImposto());
+            orcamentoModel.setDesconto(orcamento.getDesconto());
+            orcamentoModel.setTotalPagar(orcamento.getTotalPagar());
+            orcamentoModel.setEfetivado(orcamento.getEfetivado());
         }
-        orcamentoModel.setItensPedido(itensPedidoModel);
-        orcamentoModel.setCustoPedido(orcamento.getCustoPedido());
-        orcamentoModel.setCustoImposto(orcamento.getCustoImposto());
-        orcamentoModel.setDesconto(orcamento.getDesconto());
-        orcamentoModel.setTotalPagar(orcamento.getTotalPagar());
-        orcamentoModel.setEfetivado(orcamento.getEfetivado());
         return orcamentoModel;
     }
 
     public static Produto produtoToEntity (ProdutoModel produtoModel){
         Produto produto = new Produto();
+        produto.setCodigo(produtoModel.getCodigo());
         produto.setDescricao(produtoModel.getDescricao());
         produto.setPrecoUnitario(produtoModel.getPrecoUnitario());
         produto.setItemDeEstoque(itemDeEstoqueToEntity(produtoModel.getItemDeEstoque()));

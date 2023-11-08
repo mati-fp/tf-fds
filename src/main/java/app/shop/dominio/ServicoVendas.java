@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.shop.dominio.desconto.ServicoDescontos;
 import app.shop.dominio.dto.ItemPedidoDto;
 import app.shop.dominio.dto.PedidoDto;
 import app.shop.dominio.model.ItemPedidoModel;
@@ -22,6 +23,8 @@ public class ServicoVendas {
     private IRepOrcamento orcamentoRep;
     @Autowired
     private IRepItemPedido itemPedidoRep;
+    @Autowired
+    private ServicoDescontos servicoDescontos;
 
     public OrcamentoModel geraOrcamento(PedidoDto pedidoDto, List<ProdutoModel> produtos) {
         try {
@@ -51,18 +54,17 @@ public class ServicoVendas {
                 itens.add(itemPedido);
             }
         
-            // Calculando imposto e desconto
-            double imposto = custoTotalPedido * 0.10;
-            double desconto = (itens.size() > 5) ? custoTotalPedido * 0.05 : 0;
-        
-            // Calculando total a pagar
-            double totalPagar = custoTotalPedido + imposto - desconto;
-
-            // Atualizando o orçamento com os valores calculados
+            // Calculando o valor do imposto
+            Double imposto = custoTotalPedido * 0.10;
             orcamento.setCustoPedido(custoTotalPedido);
             orcamento.setCustoImposto(imposto);
+            // Calcula o valor do desconto
+            Double desconto = servicoDescontos.calcularDesconto(orcamento, itens.size());
             orcamento.setDesconto(desconto);
+            // Calcula o valor total a pagar
+            Double totalPagar = custoTotalPedido + imposto - desconto;
             orcamento.setTotalPagar(totalPagar);
+            // Salva o orçamento
             orcamento = orcamentoRep.save(orcamento);
 
             // Associando o orçamento a cada item do pedido

@@ -1,6 +1,7 @@
 package app.shop.adaptorsInterfaces.repositorio;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -48,5 +49,15 @@ public class RepOrcamento implements IRepOrcamento{
         }
 
         return orcamentosModel;
+    }
+
+    public Double getValorDas3UltimasComprasPorCliente(String nomeCliente){
+        Double valor =  orcamentoRep.findSumOfLastThreeEffectiveOrcamentos(nomeCliente, PageRequest.of(0, 3))
+            .stream()
+            .filter(Objects::nonNull)
+            .findFirst()
+            .orElse(0.0);
+
+        return valor;
     }
 }

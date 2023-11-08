@@ -13,4 +13,6 @@ public interface IRepOrcamento {
     public OrcamentoModel findById(UUID orcamentoId) throws RuntimeException;
 
     public List<OrcamentoModel> findTopNByEfetivadoOrderByCreatedAtDesc(int n);
+
+    public Double getValorDas3UltimasComprasPorCliente(String nomeCliente);
 }
