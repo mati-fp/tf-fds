@@ -19,6 +19,9 @@ public class EfetivarOrcamento {
     public String fazPagamento(String orcamentoId) {
         OrcamentoModel orcamento = servicoVendas.buscaOrcamento(orcamentoId);
         Boolean efetiva = servicoEstoque.buscaProdutosPorNPedido(orcamento);
+        if (!orcamento.isValid()) {
+            return "Orcamento expirado";
+        }
         if (efetiva) {
             servicoVendas.setEfetivado(orcamento);
             return "Pagamento efetivado";
