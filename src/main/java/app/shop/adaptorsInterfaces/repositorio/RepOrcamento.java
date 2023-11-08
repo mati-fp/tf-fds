@@ -16,7 +16,6 @@ import app.shop.adaptorsInterfaces.entity.Orcamento;
 import app.shop.adaptorsInterfaces.interfacesJPA.IRepOrcamentoJPA;
 import app.shop.dominio.model.OrcamentoModel;
 import app.shop.dominio.repositoryInterface.IRepOrcamento;
-import jakarta.persistence.criteria.CriteriaBuilder.In;
 
 @Repository
 @Primary
