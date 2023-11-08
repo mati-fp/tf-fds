@@ -1,5 +1,6 @@
 package app.shop.dominio.repositoryInterface;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,11 +9,11 @@ import app.shop.dominio.model.OrcamentoModel;
 
 public interface IRepOrcamento {
     
-    public OrcamentoModel save(OrcamentoModel orcamento);
+    OrcamentoModel save(OrcamentoModel orcamento);
+    OrcamentoModel findById(UUID orcamentoId) throws RuntimeException;
+    List<OrcamentoModel> findTopNByEfetivadoOrderByCreatedAtDesc(int n);
 
-    public OrcamentoModel findById(UUID orcamentoId) throws RuntimeException;
+    Double getValorDas3UltimasComprasPorCliente(String nomeCliente);
 
-    public List<OrcamentoModel> findTopNByEfetivadoOrderByCreatedAtDesc(int n);
-
-    public Double getValorDas3UltimasComprasPorCliente(String nomeCliente);
+    Integer getQuantidadeDeOrcamentosNosUltimosSeisMeses(String nomeCliente, LocalDate seisMesesAtras);
 }

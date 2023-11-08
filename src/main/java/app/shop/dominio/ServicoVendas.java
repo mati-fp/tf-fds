@@ -59,7 +59,8 @@ public class ServicoVendas {
             orcamento.setCustoPedido(custoTotalPedido);
             orcamento.setCustoImposto(imposto);
             // Calcula o valor do desconto
-            Double desconto = servicoDescontos.calcularDesconto(orcamento, itens.size());
+            Double descontoPorcentagem = servicoDescontos.calcularDesconto(orcamento, itens.size());
+            Double desconto = custoTotalPedido * descontoPorcentagem;
             orcamento.setDesconto(desconto);
             // Calcula o valor total a pagar
             Double totalPagar = custoTotalPedido + imposto - desconto;

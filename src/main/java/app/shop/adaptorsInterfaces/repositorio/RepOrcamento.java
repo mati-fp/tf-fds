@@ -1,5 +1,6 @@
 package app.shop.adaptorsInterfaces.repositorio;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -15,6 +16,7 @@ import app.shop.adaptorsInterfaces.entity.Orcamento;
 import app.shop.adaptorsInterfaces.interfacesJPA.IRepOrcamentoJPA;
 import app.shop.dominio.model.OrcamentoModel;
 import app.shop.dominio.repositoryInterface.IRepOrcamento;
+import jakarta.persistence.criteria.CriteriaBuilder.In;
 
 @Repository
 @Primary
@@ -59,5 +61,10 @@ public class RepOrcamento implements IRepOrcamento{
             .orElse(0.0);
 
         return valor;
+    }
+
+    public Integer getQuantidadeDeOrcamentosNosUltimosSeisMeses(String nomeCliente, LocalDate seisMesesAtras){
+        Integer qtd = orcamentoRep.getQuantidadeDeOrcamentosNosUltimosSeisMeses(nomeCliente, seisMesesAtras);
+        return qtd;
     }
 }
