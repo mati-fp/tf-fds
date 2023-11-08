@@ -18,7 +18,7 @@ public interface IRepOrcamentoJPA extends JpaRepository<Orcamento, UUID> {
     @Query("SELECT SUM(o.totalPagar) FROM Orcamento o WHERE o.nomeCliente = :nomeCliente AND o.efetivado = true ORDER BY o.createdAt DESC")
     List<Double> findSumOfLastThreeEffectiveOrcamentos(@Param("nomeCliente") String nomeCliente, Pageable pageable);
 
-    @Query("SELECT count(o) FROM Orcamento o WHERE o.nomeCliente = :nomeCliente AND o.createdAt >= :seisMesesAtras")
+    @Query("SELECT count(o) FROM Orcamento o WHERE o.nomeCliente = :nomeCliente AND o.createdAt >= :seisMesesAtras AND o.efetivado = true")
     Integer getQuantidadeDeOrcamentosNosUltimosSeisMeses(@Param("nomeCliente") String nomeCliente, @Param("seisMesesAtras") LocalDate seisMesesAtras);  
 
 }
