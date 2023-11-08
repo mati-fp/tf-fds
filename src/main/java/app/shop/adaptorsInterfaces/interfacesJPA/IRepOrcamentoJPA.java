@@ -15,10 +15,10 @@ import app.shop.adaptorsInterfaces.entity.Orcamento;
 public interface IRepOrcamentoJPA extends JpaRepository<Orcamento, UUID> {
     List<Orcamento> findTopNByEfetivadoOrderByCreatedAtDesc(boolean efetivado, Pageable pageable);
 
-    @Query("SELECT SUM(o.total_pagar) FROM orcamento o WHERE o.nome_cliente = :nomeCliente AND o.efetivado = true ORDER BY o.created_at DESC")
+    @Query("SELECT SUM(o.totalPagar) FROM Orcamento o WHERE o.nomeCliente = :nomeCliente AND o.efetivado = true ORDER BY o.createdAt DESC")
     List<Double> findSumOfLastThreeEffectiveOrcamentos(@Param("nomeCliente") String nomeCliente, Pageable pageable);
 
-    @Query("SELECT count(o) FROM orcamento o WHERE o.nome_cliente = :nomeCliente AND o.created_at >= :seisMesesAtras")
+    @Query("SELECT count(o) FROM Orcamento o WHERE o.nomeCliente = :nomeCliente AND o.createdAt >= :seisMesesAtras")
     Integer getQuantidadeDeOrcamentosNosUltimosSeisMeses(@Param("nomeCliente") String nomeCliente, @Param("seisMesesAtras") LocalDate seisMesesAtras);  
 
 }
