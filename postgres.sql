@@ -1,19 +1,29 @@
 
 DROP TABLE IF EXISTS item_de_estoque CASCADE;
-DROP TABLE IF EXISTS item_pedido CASCADE;
-DROP TABLE IF EXISTS produto CASCADE; 
+DROP TABLE IF EXISTS produto CASCADE;
+DROP TABLE IF EXISTS item_pedido CASCADE; 
 DROP TABLE IF EXISTS orcamento CASCADE;
+DROP TABLE IF EXISTS cliente CASCADE;
+
+-- Tabela cliente
+CREATE TABLE cliente (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) UNIQUE NOT NULL
+);
 
 -- Tabela orcamento
 CREATE TABLE orcamento (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    pedido_id SERIAL UNIQUE NOT NULL,
-    nome_cliente VARCHAR(255),
+    cliente_id INTEGER,
     custo_pedido NUMERIC(10, 2),
     custo_imposto NUMERIC(10, 2),
     desconto NUMERIC(10, 2),
     total_pagar NUMERIC(10, 2),
-    efetivado BOOLEAN
+    efetivado BOOLEAN,
+    created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITHOUT TIME ZONE,
+    deleted_at TIMESTAMP WITHOUT TIME ZONE,
+    FOREIGN KEY (cliente_id) REFERENCES cliente(id)
 );
 
 
@@ -28,7 +38,7 @@ CREATE TABLE produto (
 CREATE TABLE item_pedido (
     id SERIAL PRIMARY KEY,
     quantidade INTEGER,
-    pedido_id INTEGER,
+    orcamento_id UUID,
     cod_produto INTEGER
 );
 
@@ -43,7 +53,7 @@ CREATE TABLE item_de_estoque (
 
 -- Adicionar chaves estrangeiras para item_pedido
 ALTER TABLE item_pedido
-ADD CONSTRAINT fk_item_pedido_pedido_id FOREIGN KEY (pedido_id) REFERENCES orcamento (pedido_id);
+ADD CONSTRAINT fk_item_pedido_pedido_id FOREIGN KEY (orcamento_id) REFERENCES orcamento (id);
 
 ALTER TABLE item_pedido
 ADD CONSTRAINT fk_item_pedido_cod_produto FOREIGN KEY (cod_produto) REFERENCES produto (codigo);
@@ -52,10 +62,6 @@ ADD CONSTRAINT fk_item_pedido_cod_produto FOREIGN KEY (cod_produto) REFERENCES p
 ALTER TABLE item_de_estoque
 ADD CONSTRAINT fk_item_de_estoque_cod_produto FOREIGN KEY (cod_produto) REFERENCES produto (codigo);
 
-ALTER TABLE orcamento
-ADD COLUMN created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-ADD COLUMN updated_at TIMESTAMP WITHOUT TIME ZONE,
-ADD COLUMN deleted_at TIMESTAMP WITHOUT TIME ZONE;
 
 
 

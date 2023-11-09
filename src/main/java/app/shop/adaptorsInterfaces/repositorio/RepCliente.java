@@ -5,16 +5,16 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import app.shop.adaptorsInterfaces.entity.Cliente;
-import app.shop.adaptorsInterfaces.interfacesJPA.IRepClientesJPA;
+import app.shop.adaptorsInterfaces.interfacesJPA.IRepClienteJPA;
 import app.shop.dominio.model.ClienteModel;
-import app.shop.dominio.repositoryInterface.IRepClientes;
+import app.shop.dominio.repositoryInterface.IRepCliente;
 
 @Repository
 @Primary
-public class RepClientes implements IRepClientes{
+public class RepCliente implements IRepCliente{
     
     @Autowired
-    private IRepClientesJPA repClientesJPA;
+    private IRepClienteJPA repClientesJPA;
 
     @Override
     public ClienteModel findOrCreateByName(String nomeCliente) {

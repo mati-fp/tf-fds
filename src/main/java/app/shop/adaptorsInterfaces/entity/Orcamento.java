@@ -9,7 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+// import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -29,9 +29,9 @@ public class Orcamento {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "pedido_id", unique = true, nullable = false)
-    private Long pedidoId;
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @Column(name = "pedido_id", unique = true, nullable = false)
+    // private Long pedidoId;
 
     // @Column(name = "nome_cliente")
     // private String nomeCliente;
@@ -87,13 +87,13 @@ public class Orcamento {
         this.id = id;
     }
 
-    public Long getPedidoId() {
-        return pedidoId;
-    }
+    // public Long getPedidoId() {
+    //     return pedidoId;
+    // }
 
-    public void setPedidoId(Long pedidoId) {
-        this.pedidoId = pedidoId;
-    }
+    // public void setPedidoId(Long pedidoId) {
+    //     this.pedidoId = pedidoId;
+    // }
 
     public Double getCustoPedido() {
         return custoPedido;

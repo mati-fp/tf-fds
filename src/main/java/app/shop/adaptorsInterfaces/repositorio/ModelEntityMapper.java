@@ -59,9 +59,8 @@ public class ModelEntityMapper {
 
     public static Orcamento orcamentoToEntity (OrcamentoModel orcamentoModel){
         Orcamento orcamento = new Orcamento();
-        if (orcamentoModel.getId() != null && orcamentoModel.getPedidoId() != null) {
+        if (orcamentoModel.getId() != null) {
             orcamento.setId(orcamentoModel.getId());
-            orcamento.setPedidoId(orcamentoModel.getPedidoId());
         }
         orcamento.setCliente(clienteToEntity(orcamentoModel.getCliente()));
         if (orcamentoModel.getItensPedido() != null) {
@@ -82,7 +81,6 @@ public class ModelEntityMapper {
     public static OrcamentoModel orcamentoToModel (Orcamento orcamento) {
         OrcamentoModel orcamentoModel = new OrcamentoModel();
         orcamentoModel.setId(orcamento.getId());
-        orcamentoModel.setPedidoId(orcamento.getPedidoId());
         orcamentoModel.setCliente(clienteToModel(orcamento.getCliente()));
         if (orcamento.getItensPedido() != null) {
             List<ItemPedidoModel> itensPedidoModel = new ArrayList<ItemPedidoModel>();

@@ -14,7 +14,7 @@ import app.shop.dominio.model.ClienteModel;
 import app.shop.dominio.model.ItemPedidoModel;
 import app.shop.dominio.model.OrcamentoModel;
 import app.shop.dominio.model.ProdutoModel;
-import app.shop.dominio.repositoryInterface.IRepClientes;
+import app.shop.dominio.repositoryInterface.IRepCliente;
 import app.shop.dominio.repositoryInterface.IRepItemPedido;
 import app.shop.dominio.repositoryInterface.IRepOrcamento;
 
@@ -26,7 +26,7 @@ public class ServicoVendas {
     @Autowired
     private IRepItemPedido itemPedidoRep;
     @Autowired
-    private IRepClientes clienteRep;
+    private IRepCliente clienteRep;
     @Autowired
     private ServicoDescontos servicoDescontos;
 

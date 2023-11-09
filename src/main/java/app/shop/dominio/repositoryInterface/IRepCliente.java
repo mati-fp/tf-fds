@@ -2,7 +2,7 @@ package app.shop.dominio.repositoryInterface;
 
 import app.shop.dominio.model.ClienteModel;
 
-public interface IRepClientes {
+public interface IRepCliente {
 
     ClienteModel findOrCreateByName(String nomeCliente);
 }

@@ -10,7 +10,7 @@ public class OrcamentoModel {
 
     private UUID id;
 
-    private Long pedidoId;
+    // private Long pedidoId;
 
     // private String nomeCliente;
 
@@ -42,13 +42,13 @@ public class OrcamentoModel {
         this.id = id;
     }
 
-    public Long getPedidoId() {
-        return pedidoId;
-    }
+    // public Long getPedidoId() {
+    //     return pedidoId;
+    // }
 
-    public void setPedidoId(Long pedidoId) {
-        this.pedidoId = pedidoId;
-    }
+    // public void setPedidoId(Long pedidoId) {
+    //     this.pedidoId = pedidoId;
+    // }
 
     public Double getCustoPedido() {
         return custoPedido;
