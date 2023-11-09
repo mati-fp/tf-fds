@@ -18,8 +18,8 @@ public class DescontoPorValorMedio implements DescontoStrategy{
     @Override
     public Double calcularDesconto(OrcamentoModel orcamentoModel, Integer qtdCompras) {
         
-        String nomeCliente = orcamentoModel.getNomeCliente();
-        Double valor = orcamentoRep.getValorDas3UltimasComprasPorCliente(nomeCliente);
+        Long clienteId = orcamentoModel.getCliente().getId();
+        Double valor = orcamentoRep.getValorDas3UltimasComprasPorCliente(clienteId);
         valor = valor / 3.0;
         if (valor > 10000.0) {
             Double desconto = 0.1;

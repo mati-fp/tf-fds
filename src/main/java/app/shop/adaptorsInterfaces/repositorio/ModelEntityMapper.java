@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import app.shop.adaptorsInterfaces.entity.Cliente;
 import app.shop.adaptorsInterfaces.entity.ItemDeEstoque;
 import app.shop.adaptorsInterfaces.entity.ItemPedido;
 import app.shop.adaptorsInterfaces.entity.Orcamento;
 import app.shop.adaptorsInterfaces.entity.Produto;
+import app.shop.dominio.model.ClienteModel;
 import app.shop.dominio.model.ItemDeEstoqueModel;
 import app.shop.dominio.model.ItemPedidoModel;
 import app.shop.dominio.model.OrcamentoModel;
@@ -61,7 +63,7 @@ public class ModelEntityMapper {
             orcamento.setId(orcamentoModel.getId());
             orcamento.setPedidoId(orcamentoModel.getPedidoId());
         }
-        orcamento.setNomeCliente(orcamentoModel.getNomeCliente());
+        orcamento.setCliente(clienteToEntity(orcamentoModel.getCliente()));
         if (orcamentoModel.getItensPedido() != null) {
             List<ItemPedido> itensPedido = new ArrayList<ItemPedido>();
             for (ItemPedidoModel itemPedidoModel : orcamentoModel.getItensPedido()) {
@@ -81,7 +83,7 @@ public class ModelEntityMapper {
         OrcamentoModel orcamentoModel = new OrcamentoModel();
         orcamentoModel.setId(orcamento.getId());
         orcamentoModel.setPedidoId(orcamento.getPedidoId());
-        orcamentoModel.setNomeCliente(orcamento.getNomeCliente());
+        orcamentoModel.setCliente(clienteToModel(orcamento.getCliente()));
         if (orcamento.getItensPedido() != null) {
             List<ItemPedidoModel> itensPedidoModel = new ArrayList<ItemPedidoModel>();
             for (ItemPedido itemPedido : orcamento.getItensPedido()) {
@@ -113,6 +115,20 @@ public class ModelEntityMapper {
         produtoModel.setPrecoUnitario(produto.getPrecoUnitario());
         produtoModel.setItemDeEstoque(itemDeEstoqueToModel(produto.getItemDeEstoque()));
         return produtoModel;
+    }
+
+    public static Cliente clienteToEntity (ClienteModel clienteModel) {
+        Cliente cliente = new Cliente();
+        cliente.setId(clienteModel.getId());
+        cliente.setNome(clienteModel.getNome());
+        return cliente;
+    }
+
+    public static ClienteModel clienteToModel (Cliente clienteEntity) {
+        ClienteModel clienteModel = new ClienteModel();
+        clienteModel.setId(clienteEntity.getId());
+        clienteModel.setNome(clienteEntity.getNome());
+        return clienteModel;
     }
 
 }

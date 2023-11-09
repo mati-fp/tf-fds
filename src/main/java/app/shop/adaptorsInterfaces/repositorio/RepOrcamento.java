@@ -52,8 +52,8 @@ public class RepOrcamento implements IRepOrcamento{
         return orcamentosModel;
     }
 
-    public Double getValorDas3UltimasComprasPorCliente(String nomeCliente){
-        Double valor =  orcamentoRep.findSumOfLastThreeEffectiveOrcamentos(nomeCliente, PageRequest.of(0, 3))
+    public Double getValorDas3UltimasComprasPorCliente(Long clienteId){
+        Double valor =  orcamentoRep.findSumOfLastThreeEffectiveOrcamentos(clienteId, PageRequest.of(0, 3))
             .stream()
             .filter(Objects::nonNull)
             .findFirst()
@@ -62,8 +62,8 @@ public class RepOrcamento implements IRepOrcamento{
         return valor;
     }
 
-    public Integer getQuantidadeDeOrcamentosNosUltimosSeisMeses(String nomeCliente, LocalDate seisMesesAtras){
-        Integer qtd = orcamentoRep.getQuantidadeDeOrcamentosNosUltimosSeisMeses(nomeCliente, seisMesesAtras);
+    public Integer getQuantidadeDeOrcamentosNosUltimosSeisMeses(Long clienteId, LocalDate seisMesesAtras){
+        Integer qtd = orcamentoRep.getQuantidadeDeOrcamentosNosUltimosSeisMeses(clienteId, seisMesesAtras);
         return qtd;
     }
 }

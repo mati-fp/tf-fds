@@ -11,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -31,8 +33,12 @@ public class Orcamento {
     @Column(name = "pedido_id", unique = true, nullable = false)
     private Long pedidoId;
 
-    @Column(name = "nome_cliente")
-    private String nomeCliente;
+    // @Column(name = "nome_cliente")
+    // private String nomeCliente;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
     @Column(name = "custo_pedido")
     private Double custoPedido;
@@ -137,12 +143,20 @@ public class Orcamento {
         this.itensPedido = itensPedido;
     }
 
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
+    // public void setNomeCliente(String nomeCliente) {
+    //     this.nomeCliente = nomeCliente;
+    // }
+
+    // public String getNomeCliente() {
+    //     return nomeCliente;
+    // }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
     public LocalDateTime getCreatedAt() {

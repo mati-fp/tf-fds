@@ -12,7 +12,9 @@ public class OrcamentoModel {
 
     private Long pedidoId;
 
-    private String nomeCliente;
+    // private String nomeCliente;
+
+    private ClienteModel cliente;
 
     private Double custoPedido;
 
@@ -96,12 +98,20 @@ public class OrcamentoModel {
         this.itensPedido = itensPedido;
     }
 
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
+    // public void setNomeCliente(String nomeCliente) {
+    //     this.nomeCliente = nomeCliente;
+    // }
+
+    // public String getNomeCliente() {
+    //     return nomeCliente;
+    // }
+
+    public void setCliente(ClienteModel cliente) {
+        this.cliente = cliente;
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
+    public ClienteModel getCliente() {
+        return cliente;
     }
 
     public LocalDateTime getCreatedAt() {

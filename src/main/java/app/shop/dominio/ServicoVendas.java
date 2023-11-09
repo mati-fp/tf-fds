@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import app.shop.dominio.desconto.ServicoDescontos;
 import app.shop.dominio.dto.ItemPedidoDto;
 import app.shop.dominio.dto.PedidoDto;
+import app.shop.dominio.model.ClienteModel;
 import app.shop.dominio.model.ItemPedidoModel;
 import app.shop.dominio.model.OrcamentoModel;
 import app.shop.dominio.model.ProdutoModel;
+import app.shop.dominio.repositoryInterface.IRepClientes;
 import app.shop.dominio.repositoryInterface.IRepItemPedido;
 import app.shop.dominio.repositoryInterface.IRepOrcamento;
 
@@ -24,13 +26,16 @@ public class ServicoVendas {
     @Autowired
     private IRepItemPedido itemPedidoRep;
     @Autowired
+    private IRepClientes clienteRep;
+    @Autowired
     private ServicoDescontos servicoDescontos;
 
     public OrcamentoModel geraOrcamento(PedidoDto pedidoDto, List<ProdutoModel> produtos) {
         try {
             // Criando o orçamento inicial
             OrcamentoModel orcamento = new OrcamentoModel();
-            orcamento.setNomeCliente(pedidoDto.nomeCliente);
+            ClienteModel clienteModel = clienteRep.findOrCreateByName(pedidoDto.nomeCliente);
+            orcamento.setCliente(clienteModel);
             orcamento = orcamentoRep.save(orcamento);
         
             // Lista para armazenar os itens do pedido

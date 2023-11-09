@@ -18,9 +18,9 @@ public class DescontoPorQtdCompras implements DescontoStrategy{
 
     @Override
     public Double calcularDesconto(OrcamentoModel orcamentoModel, Integer qtdCompras) {
-        String nomeCliente = orcamentoModel.getNomeCliente();
+        Long clienteId = orcamentoModel.getCliente().getId();
         LocalDate seisMesesAtras = LocalDate.now().minusMonths(6);
-        Integer qtdOrcamentos = orcamentoRepository.getQuantidadeDeOrcamentosNosUltimosSeisMeses(nomeCliente, seisMesesAtras);
+        Integer qtdOrcamentos = orcamentoRepository.getQuantidadeDeOrcamentosNosUltimosSeisMeses(clienteId, seisMesesAtras);
         if (qtdOrcamentos >= 10) {
             return 0.25;
         } else {
