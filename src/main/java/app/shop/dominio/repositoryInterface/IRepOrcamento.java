@@ -1,6 +1,6 @@
 package app.shop.dominio.repositoryInterface;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,5 +15,5 @@ public interface IRepOrcamento {
 
     Double getValorDas3UltimasComprasPorCliente(Long clienteId);
 
-    Integer getQuantidadeDeOrcamentosNosUltimosSeisMeses(Long clienteId, LocalDate seisMesesAtras);
+    Integer getQuantidadeDeOrcamentosNosUltimosSeisMeses(Long clienteId, LocalDateTime seisMesesAtras);
 }

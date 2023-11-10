@@ -1,6 +1,5 @@
 package app.shop.dominio.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -126,8 +125,24 @@ public class OrcamentoModel {
         return deletedAt;
     }
 
+    public void setCreadtedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
     public boolean isValid() {
-        LocalDate now = LocalDate.now();
+        System.out.println("cheguei no método isValid");
+        if (createdAt == null) {
+            return false;
+        }
+        LocalDateTime now = LocalDateTime.now();
         long daysSinceCreation = ChronoUnit.DAYS.between(createdAt, now);
 
         // Janeiro e Fevereiro

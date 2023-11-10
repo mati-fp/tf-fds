@@ -170,5 +170,17 @@ public class Orcamento {
     public LocalDateTime getDeletedAt() {
         return deletedAt;
     }
+
+    public void setCreadtedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
 }
 

@@ -1,6 +1,6 @@
 package app.shop.dominio.desconto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ public class DescontoPorQtdCompras implements DescontoStrategy{
     @Override
     public Double calcularDesconto(OrcamentoModel orcamentoModel, Integer qtdCompras) {
         Long clienteId = orcamentoModel.getCliente().getId();
-        LocalDate seisMesesAtras = LocalDate.now().minusMonths(6);
+        LocalDateTime seisMesesAtras = LocalDateTime.now().minusMonths(6);
         Integer qtdOrcamentos = orcamentoRepository.getQuantidadeDeOrcamentosNosUltimosSeisMeses(clienteId, seisMesesAtras);
         if (qtdOrcamentos >= 10) {
             return 0.25;

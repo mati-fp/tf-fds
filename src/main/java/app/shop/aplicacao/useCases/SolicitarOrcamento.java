@@ -22,6 +22,7 @@ public class SolicitarOrcamento {
     public OrcamentoModel fazPedido(PedidoDto pedidoDto){
         try {
             List<ProdutoModel> produtos = servicoEstoque.verificaProdutos(pedidoDto.itens);
+            System.out.println("terminei a chamda do verifica produtos");
             if(produtos.size() == pedidoDto.itens.size()){
                 OrcamentoModel orcamento = servicoVendas.geraOrcamento(pedidoDto, produtos);
                 return orcamento;

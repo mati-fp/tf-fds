@@ -1,5 +1,6 @@
 package app.shop.adaptorsInterfaces.repositorio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class RepItemPedido implements IRepItemPedido{
 
         List<ItemPedido> itensPedidoEntity = itemPedidoRep.findByOrcamento(orcamentoEntity);
 
-        List<ItemPedidoModel> itensPedidoModel = List.of();
+        List<ItemPedidoModel> itensPedidoModel = new ArrayList<>();
 
         for (ItemPedido itemPedido : itensPedidoEntity) {
             itensPedidoModel.add(ModelEntityMapper.itemPedidoToModel(itemPedido));

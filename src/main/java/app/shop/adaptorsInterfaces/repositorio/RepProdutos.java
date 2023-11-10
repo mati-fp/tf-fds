@@ -1,5 +1,6 @@
 package app.shop.adaptorsInterfaces.repositorio;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ public class RepProdutos implements IRepProduto{
     public List<ProdutoModel> findAll(){
         List<Produto> produtosEntity = (List<Produto>) repProdutos.findAll();
         
-        List<ProdutoModel> produtosModel = List.of();
+        List<ProdutoModel> produtosModel = new ArrayList<>();
 
         for (Produto produto : produtosEntity) {
             produtosModel.add(ModelEntityMapper.produtoToModel(produto));

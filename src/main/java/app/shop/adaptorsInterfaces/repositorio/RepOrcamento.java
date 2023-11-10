@@ -1,6 +1,7 @@
 package app.shop.adaptorsInterfaces.repositorio;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -43,7 +44,7 @@ public class RepOrcamento implements IRepOrcamento{
 
         List<Orcamento> orcamentosEntity = orcamentoRep.findTopNByEfetivadoOrderByCreatedAtDesc(true, limit);
 
-        List<OrcamentoModel> orcamentosModel = List.of();
+        List<OrcamentoModel> orcamentosModel = new ArrayList<>();
 
         for (Orcamento orcamento : orcamentosEntity) {
             orcamentosModel.add(ModelEntityMapper.orcamentoToModel(orcamento));
@@ -56,13 +57,13 @@ public class RepOrcamento implements IRepOrcamento{
         Double valor =  orcamentoRep.findSumOfLastThreeEffectiveOrcamentos(clienteId, PageRequest.of(0, 3))
             .stream()
             .filter(Objects::nonNull)
-            .findFirst()
-            .orElse(0.0);
-
+            .limit(3)
+            .mapToDouble(Double::doubleValue)
+            .sum();
         return valor;
     }
 
-    public Integer getQuantidadeDeOrcamentosNosUltimosSeisMeses(Long clienteId, LocalDate seisMesesAtras){
+    public Integer getQuantidadeDeOrcamentosNosUltimosSeisMeses(Long clienteId, LocalDateTime seisMesesAtras){
         Integer qtd = orcamentoRep.getQuantidadeDeOrcamentosNosUltimosSeisMeses(clienteId, seisMesesAtras);
         return qtd;
     }

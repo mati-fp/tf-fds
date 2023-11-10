@@ -37,7 +37,7 @@ public class ServicoVendas {
             ClienteModel clienteModel = clienteRep.findOrCreateByName(pedidoDto.nomeCliente);
             orcamento.setCliente(clienteModel);
             orcamento = orcamentoRep.save(orcamento);
-        
+            System.out.println("salvei pela primeira vez orcamento com apenas o nome do cliente");
             // Lista para armazenar os itens do pedido
             List<ItemPedidoModel> itens = new ArrayList<>();
         
@@ -47,7 +47,7 @@ public class ServicoVendas {
             // Processamento dos itens do pedido
             for (ItemPedidoDto itemPedidoDto : pedidoDto.itens) {
                 ProdutoModel produto = produtos.stream()
-                    .filter(p -> p.getCodigo().equals(itemPedidoDto.codigo_produto))
+                    .filter(p -> p.getCodigo().equals(itemPedidoDto.codigoProduto))
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
             
@@ -73,13 +73,18 @@ public class ServicoVendas {
             // Salva o orçamento
             orcamento = orcamentoRep.save(orcamento);
 
+            System.out.println("custo total do pedido: " + custoTotalPedido);
+            System.out.println("imposto: " + imposto);
+            System.out.println("desconto: " + desconto);
+            System.out.println("total a pagar: " + totalPagar);
+
             // Associando o orçamento a cada item do pedido
             for (ItemPedidoModel item : itens) {
                 ItemPedidoModel currentItem = item;
                 currentItem.setOrcamento(orcamento);
                 itemPedidoRep.save(currentItem);
             }
-        
+            System.out.println("Salvei o ocamento inteiro");
             return orcamento;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao gerar orçamento", e);

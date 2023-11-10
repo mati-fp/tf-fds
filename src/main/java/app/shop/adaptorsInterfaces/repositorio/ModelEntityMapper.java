@@ -1,7 +1,9 @@
 package app.shop.adaptorsInterfaces.repositorio;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -19,13 +21,24 @@ import app.shop.dominio.model.ProdutoModel;
 @Component
 public class ModelEntityMapper {
     
+    private Map<Long, ProdutoModel> produtoModelCache = new HashMap<>();
+    private Map<Long, Produto> produtoCache = new HashMap<>();
+    private Map<Long, ItemDeEstoqueModel> itemDeEstoqueModelCache = new HashMap<>();
+    private Map<Long, ItemDeEstoque> itemDeEstoqueCache = new HashMap<>();
+    private Map<Long, ItemPedidoModel> itemPedidoModelCache = new HashMap<>();
+    private Map<Long, ItemPedido> itemPedidoCache = new HashMap<>();
+    private Map<Long, OrcamentoModel> orcamentoModelCache = new HashMap<>();
+    private Map<Long, Orcamento> orcamentoCache = new HashMap<>();
+    private Map<Long, ClienteModel> clienteModelCache = new HashMap<>();
+    private Map<Long, Cliente> clienteCache = new HashMap<>();
+    
     public static ItemDeEstoque itemDeEstoqueToEntity (ItemDeEstoqueModel itemDeEstoqueModel){
         ItemDeEstoque itemDeEstoque = new ItemDeEstoque();
         itemDeEstoque.setId(itemDeEstoqueModel.getId());
         itemDeEstoque.setEstoqueMaximo(itemDeEstoqueModel.getEstoqueMaximo());
         itemDeEstoque.setEstoqueMinimo(itemDeEstoqueModel.getEstoqueMinimo());
         itemDeEstoque.setQuantidadeAtual(itemDeEstoqueModel.getQuantidadeAtual());
-        itemDeEstoque.setProduto(produtoToEntity(itemDeEstoqueModel.getProduto()));
+        // itemDeEstoque.setProduto(produtoToEntity(itemDeEstoqueModel.getProduto()));
         return itemDeEstoque;
     }
 
@@ -35,7 +48,8 @@ public class ModelEntityMapper {
         itemDeEstoqueModel.setEstoqueMaximo(itemDeEstoque.getEstoqueMaximo());
         itemDeEstoqueModel.setEstoqueMinimo(itemDeEstoque.getEstoqueMinimo());
         itemDeEstoqueModel.setQuantidadeAtual(itemDeEstoque.getQuantidadeAtual());
-        itemDeEstoqueModel.setProduto(produtoToModel(itemDeEstoque.getProduto()));
+        // Cuida loop infinito que foi primeira vez visto aqui
+        // itemDeEstoqueModel.setProduto(produtoToModel(itemDeEstoque.getProduto()));
         return itemDeEstoqueModel;
     }
 
@@ -44,7 +58,8 @@ public class ModelEntityMapper {
         itemPedido.setId(itemPedidoModel.getId());
         itemPedido.setProduto(produtoToEntity(itemPedidoModel.getProduto()));
         itemPedido.setQuantidade(itemPedidoModel.getQuantidade());
-        itemPedido.setOrcamento(orcamentoToEntity(itemPedidoModel.getOrcamento()));
+        // Cuida com loop infinito
+        // itemPedido.setOrcamento(orcamentoToEntity(itemPedidoModel.getOrcamento()));
         return itemPedido;
     }
 
@@ -53,7 +68,8 @@ public class ModelEntityMapper {
         itemPedidoModel.setId(itemPedido.getId());
         itemPedidoModel.setProduto(produtoToModel(itemPedido.getProduto()));
         itemPedidoModel.setQuantidade(itemPedido.getQuantidade());
-        itemPedidoModel.setOrcamento(orcamentoToModel(itemPedido.getOrcamento()));
+        // Cuida com loop infinito
+        // itemPedidoModel.setOrcamento(orcamentoToModel(itemPedido.getOrcamento()));
         return itemPedidoModel;
     }
 
@@ -74,6 +90,9 @@ public class ModelEntityMapper {
             orcamento.setDesconto(orcamentoModel.getDesconto());
             orcamento.setTotalPagar(orcamentoModel.getTotalPagar());
             orcamento.setEfetivado(orcamentoModel.getEfetivado());
+            orcamento.setCreadtedAt(orcamentoModel.getCreatedAt());
+            orcamento.setUpdatedAt(orcamentoModel.getUpdatedAt());
+            orcamento.setDeletedAt(orcamentoModel.getDeletedAt());
         }
         return orcamento;
     }
@@ -93,6 +112,9 @@ public class ModelEntityMapper {
             orcamentoModel.setDesconto(orcamento.getDesconto());
             orcamentoModel.setTotalPagar(orcamento.getTotalPagar());
             orcamentoModel.setEfetivado(orcamento.getEfetivado());
+            orcamentoModel.setCreadtedAt(orcamento.getCreatedAt());
+            orcamentoModel.setUpdatedAt(orcamento.getUpdatedAt());
+            orcamentoModel.setDeletedAt(orcamento.getDeletedAt());
         }
         return orcamentoModel;
     }

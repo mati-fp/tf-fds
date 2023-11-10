@@ -32,7 +32,7 @@ public class ServicoEstoque {
         List<ProdutoModel> produtos = new ArrayList<>();
         try {
             for (ItemPedidoDto item : itens) {
-                ProdutoModel produto = produtosRep.findById(item.codigo_produto);
+                ProdutoModel produto = produtosRep.findById(item.codigoProduto);
 
                 ItemDeEstoqueModel itemDeEstoqueOpt = itemEstoqueRep.findByProduto(produto);
 

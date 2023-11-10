@@ -18,11 +18,11 @@ public class RepCliente implements IRepCliente{
 
     @Override
     public ClienteModel findOrCreateByName(String nomeCliente) {
-
-        Cliente cliente = repClientesJPA.findByNome(nomeCliente);
+        String nome = nomeCliente.toUpperCase();
+        Cliente cliente = repClientesJPA.findByNome(nome);
         if (cliente == null) {
             cliente = new Cliente();
-            cliente.setNome(nomeCliente);
+            cliente.setNome(nome);
             cliente = repClientesJPA.save(cliente);
         }
         ClienteModel clienteModel = ModelEntityMapper.clienteToModel(cliente);
