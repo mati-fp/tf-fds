@@ -49,20 +49,26 @@ public class ServicoEstoque {
         return produtos;
     }
 
-    public Boolean buscaProdutosPorNPedido(OrcamentoModel pedido) {
+    public Boolean buscaProdutosPorNPedido(OrcamentoModel orcamento) {
         try {
-            List<ItemPedidoModel> itens = itemPedidoRep.findByOrcamento(pedido);
+            List<ItemPedidoModel> itens = itemPedidoRep.findByOrcamento(orcamento);
+            List<ItemDeEstoqueModel> itensEstoque = new ArrayList<>();
             for (ItemPedidoModel item : itens) {
                 ProdutoModel codigoProduto = produtosRep.findById(item.getProduto().getCodigo());
-                ItemDeEstoqueModel itemEstoque = itemEstoqueRep.findByProduto(codigoProduto);
+                itensEstoque.add(itemEstoqueRep.findByProduto(codigoProduto));
 
-                if (itemEstoque.getQuantidadeAtual() < item.getQuantidade()) {
+                if (itensEstoque.get(itensEstoque.size() - 1).getQuantidadeAtual() < item.getQuantidade()) {
                     return false;
                 }
 
-                itemEstoque.setQuantidadeAtual(itemEstoque.getQuantidadeAtual() - item.getQuantidade());
-                itemEstoqueRep.save(itemEstoque);
+                Integer qtdAtual = itensEstoque.get(itensEstoque.size() - 1).getQuantidadeAtual();
+                itensEstoque.get(itensEstoque.size() - 1).setQuantidadeAtual(qtdAtual - item.getQuantidade());
             }
+
+            for (ItemDeEstoqueModel item : itensEstoque) {
+                itemEstoqueRep.save(item);
+            }
+            
             return true;
         } catch (Exception e) {
             return false;

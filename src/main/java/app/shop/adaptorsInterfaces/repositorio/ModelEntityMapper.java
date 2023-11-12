@@ -1,8 +1,5 @@
 package app.shop.adaptorsInterfaces.repositorio;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 import app.shop.adaptorsInterfaces.entity.Cliente;
@@ -89,13 +86,13 @@ public class ModelEntityMapper {
         OrcamentoModel orcamentoModel = new OrcamentoModel();
         orcamentoModel.setId(orcamento.getId());
         orcamentoModel.setCliente(clienteToModel(orcamento.getCliente()));
-        if (orcamento.getItensPedido() != null) {
-            List<ItemPedidoModel> itensPedidoModel = new ArrayList<ItemPedidoModel>();
-            for (ItemPedido itemPedido : orcamento.getItensPedido()) {
-                itensPedidoModel.add(itemPedidoToModel(itemPedido));
-            }
-            orcamentoModel.setItensPedido(itensPedidoModel);
-        }
+        // if (orcamento.getItensPedido() != null) {
+        //     List<ItemPedidoModel> itensPedidoModel = new ArrayList<ItemPedidoModel>();
+        //     for (ItemPedido itemPedido : orcamento.getItensPedido()) {
+        //         itensPedidoModel.add(itemPedidoToModel(itemPedido));
+        //     }
+        //     orcamentoModel.setItensPedido(itensPedidoModel);
+        // }
         orcamentoModel.setCustoPedido(orcamento.getCustoPedido());
         orcamentoModel.setCustoImposto(orcamento.getCustoImposto());
         orcamentoModel.setDesconto(orcamento.getDesconto());

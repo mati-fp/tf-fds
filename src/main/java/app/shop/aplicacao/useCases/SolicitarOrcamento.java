@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import app.shop.dominio.ServicoEstoque;
 import app.shop.dominio.ServicoVendas;
+import app.shop.dominio.dto.OrcamentoDto;
 import app.shop.dominio.dto.PedidoDto;
 import app.shop.dominio.model.OrcamentoModel;
 import app.shop.dominio.model.ProdutoModel;
@@ -19,11 +20,17 @@ public class SolicitarOrcamento {
     @Autowired
     private ServicoVendas servicoVendas;
 
-    public OrcamentoModel fazPedido(PedidoDto pedidoDto){
+    public OrcamentoDto fazPedido(PedidoDto pedidoDto){
         try {
             List<ProdutoModel> produtos = servicoEstoque.verificaProdutos(pedidoDto.itens);
             if(produtos.size() == pedidoDto.itens.size()){
-                OrcamentoModel orcamento = servicoVendas.geraOrcamento(pedidoDto, produtos);
+                OrcamentoModel orcamentoModel = servicoVendas.geraOrcamento(pedidoDto, produtos);
+                OrcamentoDto orcamento = new OrcamentoDto(
+                    orcamentoModel.getId(), orcamentoModel.getCustoPedido(), 
+                    orcamentoModel.getCustoImposto(), orcamentoModel.getDesconto(), 
+                    orcamentoModel.getTotalPagar(), orcamentoModel.getEfetivado(), 
+                    orcamentoModel.getCreatedAt(), orcamentoModel.getUpdatedAt()
+                );
                 return orcamento;
             }
         } catch (Exception e) {

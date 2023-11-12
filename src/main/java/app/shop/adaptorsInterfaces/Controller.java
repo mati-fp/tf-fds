@@ -17,8 +17,8 @@ import app.shop.aplicacao.useCases.EfetivarOrcamento;
 import app.shop.aplicacao.useCases.GerarRelatorio;
 import app.shop.aplicacao.useCases.ProdutosDisponiveis;
 import app.shop.aplicacao.useCases.SolicitarOrcamento;
+import app.shop.dominio.dto.OrcamentoDto;
 import app.shop.dominio.dto.PedidoDto;
-import app.shop.dominio.model.OrcamentoModel;
 import app.shop.dominio.model.ProdutoModel;
 
 
@@ -42,9 +42,9 @@ public class Controller {
 
     @PostMapping("fazPedido")
     @CrossOrigin("*")
-    public OrcamentoModel fazPedido(@RequestBody final PedidoDto pedidoDto){
+    public OrcamentoDto fazPedido(@RequestBody final PedidoDto pedidoDto){
         try {
-            OrcamentoModel orcamento = solicitarOrcamento.fazPedido(pedidoDto);
+            OrcamentoDto orcamento = solicitarOrcamento.fazPedido(pedidoDto);
             return orcamento;
         } catch (Exception e) {
             throw e;
@@ -53,7 +53,7 @@ public class Controller {
 
     @GetMapping("fazPagamento")
     @CrossOrigin("*")
-    public ResponseEntity<String> fazPagamento(@RequestParam("orcamentoID") final String orcamentoId){
+    public ResponseEntity<String> fazPagamento(@RequestParam("orcamentoId") final String orcamentoId){
         try {
             String pagamento = efetivarOrcamento.fazPagamento(orcamentoId);
             return ResponseEntity.ok(pagamento);

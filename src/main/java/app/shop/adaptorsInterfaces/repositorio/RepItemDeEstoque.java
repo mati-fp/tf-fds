@@ -34,6 +34,8 @@ public class RepItemDeEstoque implements IRepItemDeEstoque{
 
     public ItemDeEstoqueModel save(ItemDeEstoqueModel itemDeEstoque){
         ItemDeEstoque itemDeEstoqueEntity = ModelEntityMapper.itemDeEstoqueToEntity(itemDeEstoque);
+        ItemDeEstoque existingItem = itemEstoqueRep.findById(itemDeEstoque.getId()).orElseThrow(() -> new RuntimeException("Item not found"));
+        itemDeEstoqueEntity.setProduto(existingItem.getProduto());
         itemDeEstoqueEntity = itemEstoqueRep.save(itemDeEstoqueEntity);
         return ModelEntityMapper.itemDeEstoqueToModel(itemDeEstoqueEntity);
     }
