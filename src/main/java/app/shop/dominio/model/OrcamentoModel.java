@@ -9,10 +9,6 @@ public class OrcamentoModel {
 
     private UUID id;
 
-    // private Long pedidoId;
-
-    // private String nomeCliente;
-
     private ClienteModel cliente;
 
     private Double custoPedido;
@@ -23,7 +19,7 @@ public class OrcamentoModel {
 
     private Double totalPagar;
 
-    private Boolean efetivado;
+    private Integer efetivado;
 
     private List<ItemPedidoModel> itensPedido;
 
@@ -33,6 +29,10 @@ public class OrcamentoModel {
 
     private LocalDateTime deletedAt;
 
+    public OrcamentoModel() {
+        this.efetivado = 0;
+    }
+
     public UUID getId() {
         return id;
     }
@@ -40,14 +40,6 @@ public class OrcamentoModel {
     public void setId(UUID id) {
         this.id = id;
     }
-
-    // public Long getPedidoId() {
-    //     return pedidoId;
-    // }
-
-    // public void setPedidoId(Long pedidoId) {
-    //     this.pedidoId = pedidoId;
-    // }
 
     public Double getCustoPedido() {
         return custoPedido;
@@ -81,11 +73,11 @@ public class OrcamentoModel {
         this.totalPagar = totalPagar;
     }
 
-    public Boolean getEfetivado() {
+    public Integer getEfetivado() {
         return efetivado;
     }
 
-    public void setEfetivado(Boolean efetivado) {
+    public void setEfetivado(Integer efetivado) {
         this.efetivado = efetivado;
     }
 
@@ -96,14 +88,6 @@ public class OrcamentoModel {
     public void setItensPedido(List<ItemPedidoModel> itensPedido) {
         this.itensPedido = itensPedido;
     }
-
-    // public void setNomeCliente(String nomeCliente) {
-    //     this.nomeCliente = nomeCliente;
-    // }
-
-    // public String getNomeCliente() {
-    //     return nomeCliente;
-    // }
 
     public void setCliente(ClienteModel cliente) {
         this.cliente = cliente;
@@ -137,8 +121,7 @@ public class OrcamentoModel {
         this.deletedAt = deletedAt;
     }
 
-    public boolean isValid() {
-        System.out.println("cheguei no método isValid");
+    public Boolean isValid() {
         if (createdAt == null) {
             return false;
         }
@@ -151,5 +134,13 @@ public class OrcamentoModel {
         } else {
             return daysSinceCreation <= 21;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "OrcamentoModel [cliente=" + cliente + ", createdAt=" + createdAt + ", custoImposto=" + custoImposto
+                + ", custoPedido=" + custoPedido + ", deletedAt=" + deletedAt + ", desconto=" + desconto
+                + ", efetivado=" + efetivado + ", id=" + id + ", itensPedido=" + itensPedido + ", totalPagar="
+                + totalPagar + ", updatedAt=" + updatedAt + "]";
     }
 }

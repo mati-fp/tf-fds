@@ -19,7 +19,7 @@ CREATE TABLE orcamento (
     custo_imposto NUMERIC(10, 2),
     desconto NUMERIC(10, 2),
     total_pagar NUMERIC(10, 2),
-    efetivado BOOLEAN,
+    efetivado SMALLINT DEFAULT 0 CHECK (efetivado IN (0, 1)),
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITHOUT TIME ZONE,
     deleted_at TIMESTAMP WITHOUT TIME ZONE,

@@ -1,9 +1,7 @@
 package app.shop.adaptorsInterfaces.repositorio;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -20,17 +18,6 @@ import app.shop.dominio.model.ProdutoModel;
 
 @Component
 public class ModelEntityMapper {
-    
-    private Map<Long, ProdutoModel> produtoModelCache = new HashMap<>();
-    private Map<Long, Produto> produtoCache = new HashMap<>();
-    private Map<Long, ItemDeEstoqueModel> itemDeEstoqueModelCache = new HashMap<>();
-    private Map<Long, ItemDeEstoque> itemDeEstoqueCache = new HashMap<>();
-    private Map<Long, ItemPedidoModel> itemPedidoModelCache = new HashMap<>();
-    private Map<Long, ItemPedido> itemPedidoCache = new HashMap<>();
-    private Map<Long, OrcamentoModel> orcamentoModelCache = new HashMap<>();
-    private Map<Long, Orcamento> orcamentoCache = new HashMap<>();
-    private Map<Long, ClienteModel> clienteModelCache = new HashMap<>();
-    private Map<Long, Cliente> clienteCache = new HashMap<>();
     
     public static ItemDeEstoque itemDeEstoqueToEntity (ItemDeEstoqueModel itemDeEstoqueModel){
         ItemDeEstoque itemDeEstoque = new ItemDeEstoque();
@@ -59,7 +46,7 @@ public class ModelEntityMapper {
         itemPedido.setProduto(produtoToEntity(itemPedidoModel.getProduto()));
         itemPedido.setQuantidade(itemPedidoModel.getQuantidade());
         // Cuida com loop infinito
-        // itemPedido.setOrcamento(orcamentoToEntity(itemPedidoModel.getOrcamento()));
+        itemPedido.setOrcamento(orcamentoToEntity(itemPedidoModel.getOrcamento()));
         return itemPedido;
     }
 
@@ -69,7 +56,7 @@ public class ModelEntityMapper {
         itemPedidoModel.setProduto(produtoToModel(itemPedido.getProduto()));
         itemPedidoModel.setQuantidade(itemPedido.getQuantidade());
         // Cuida com loop infinito
-        // itemPedidoModel.setOrcamento(orcamentoToModel(itemPedido.getOrcamento()));
+        itemPedidoModel.setOrcamento(orcamentoToModel(itemPedido.getOrcamento()));
         return itemPedidoModel;
     }
 
@@ -79,21 +66,22 @@ public class ModelEntityMapper {
             orcamento.setId(orcamentoModel.getId());
         }
         orcamento.setCliente(clienteToEntity(orcamentoModel.getCliente()));
-        if (orcamentoModel.getItensPedido() != null) {
-            List<ItemPedido> itensPedido = new ArrayList<ItemPedido>();
-            for (ItemPedidoModel itemPedidoModel : orcamentoModel.getItensPedido()) {
-                itensPedido.add(itemPedidoToEntity(itemPedidoModel));
-            }
-            orcamento.setItensPedido(itensPedido);
-            orcamento.setCustoPedido(orcamentoModel.getCustoPedido());
-            orcamento.setCustoImposto(orcamentoModel.getCustoImposto());
-            orcamento.setDesconto(orcamentoModel.getDesconto());
-            orcamento.setTotalPagar(orcamentoModel.getTotalPagar());
-            orcamento.setEfetivado(orcamentoModel.getEfetivado());
-            orcamento.setCreadtedAt(orcamentoModel.getCreatedAt());
-            orcamento.setUpdatedAt(orcamentoModel.getUpdatedAt());
-            orcamento.setDeletedAt(orcamentoModel.getDeletedAt());
-        }
+        // if (orcamentoModel.getItensPedido() != null) {
+        //     List<ItemPedido> itensPedido = new ArrayList<ItemPedido>();
+        //     for (ItemPedidoModel itemPedidoModel : orcamentoModel.getItensPedido()) {
+        //         itensPedido.add(itemPedidoToEntity(itemPedidoModel));
+        //     }
+        //     orcamento.setItensPedido(itensPedido);
+        // }   
+        orcamento.setCustoPedido(orcamentoModel.getCustoPedido());
+        orcamento.setCustoImposto(orcamentoModel.getCustoImposto());
+        orcamento.setDesconto(orcamentoModel.getDesconto());
+        orcamento.setTotalPagar(orcamentoModel.getTotalPagar());
+        orcamento.setEfetivado(orcamentoModel.getEfetivado());
+        orcamento.setCreadtedAt(orcamentoModel.getCreatedAt());
+        orcamento.setUpdatedAt(orcamentoModel.getUpdatedAt());
+        orcamento.setDeletedAt(orcamentoModel.getDeletedAt());
+        
         return orcamento;
     }
 
@@ -107,15 +95,16 @@ public class ModelEntityMapper {
                 itensPedidoModel.add(itemPedidoToModel(itemPedido));
             }
             orcamentoModel.setItensPedido(itensPedidoModel);
-            orcamentoModel.setCustoPedido(orcamento.getCustoPedido());
-            orcamentoModel.setCustoImposto(orcamento.getCustoImposto());
-            orcamentoModel.setDesconto(orcamento.getDesconto());
-            orcamentoModel.setTotalPagar(orcamento.getTotalPagar());
-            orcamentoModel.setEfetivado(orcamento.getEfetivado());
-            orcamentoModel.setCreadtedAt(orcamento.getCreatedAt());
-            orcamentoModel.setUpdatedAt(orcamento.getUpdatedAt());
-            orcamentoModel.setDeletedAt(orcamento.getDeletedAt());
         }
+        orcamentoModel.setCustoPedido(orcamento.getCustoPedido());
+        orcamentoModel.setCustoImposto(orcamento.getCustoImposto());
+        orcamentoModel.setDesconto(orcamento.getDesconto());
+        orcamentoModel.setTotalPagar(orcamento.getTotalPagar());
+        orcamentoModel.setEfetivado(orcamento.getEfetivado());
+        orcamentoModel.setCreadtedAt(orcamento.getCreatedAt());
+        orcamentoModel.setUpdatedAt(orcamento.getUpdatedAt());
+        orcamentoModel.setDeletedAt(orcamento.getDeletedAt());
+        
         return orcamentoModel;
     }
 

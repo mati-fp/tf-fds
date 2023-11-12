@@ -1,6 +1,7 @@
 package app.shop.adaptorsInterfaces.entity;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,7 +10,6 @@ import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-// import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -29,13 +29,6 @@ public class Orcamento {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // @Column(name = "pedido_id", unique = true, nullable = false)
-    // private Long pedidoId;
-
-    // @Column(name = "nome_cliente")
-    // private String nomeCliente;
-
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
@@ -53,7 +46,7 @@ public class Orcamento {
     private Double totalPagar;
 
     @Column(name = "efetivado")
-    private Boolean efetivado;
+    private Integer efetivado;
 
     @OneToMany(mappedBy = "orcamento")
     private List<ItemPedido> itensPedido;
@@ -77,7 +70,9 @@ public class Orcamento {
         updatedAt = LocalDateTime.now();
     }
 
-    public Orcamento() {}
+    public Orcamento() {
+        this.efetivado = 0;
+    }
 
     public UUID getId() {
         return id;
@@ -86,14 +81,6 @@ public class Orcamento {
     public void setId(UUID id) {
         this.id = id;
     }
-
-    // public Long getPedidoId() {
-    //     return pedidoId;
-    // }
-
-    // public void setPedidoId(Long pedidoId) {
-    //     this.pedidoId = pedidoId;
-    // }
 
     public Double getCustoPedido() {
         return custoPedido;
@@ -127,11 +114,11 @@ public class Orcamento {
         this.totalPagar = totalPagar;
     }
 
-    public Boolean getEfetivado() {
+    public Integer getEfetivado() {
         return efetivado;
     }
 
-    public void setEfetivado(Boolean efetivado) {
+    public void setEfetivado(Integer efetivado) {
         this.efetivado = efetivado;
     }
 
@@ -142,14 +129,6 @@ public class Orcamento {
     public void setItensPedido(List<ItemPedido> itensPedido) {
         this.itensPedido = itensPedido;
     }
-
-    // public void setNomeCliente(String nomeCliente) {
-    //     this.nomeCliente = nomeCliente;
-    // }
-
-    // public String getNomeCliente() {
-    //     return nomeCliente;
-    // }
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
@@ -181,6 +160,29 @@ public class Orcamento {
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public Boolean isValid() {
+        if (createdAt == null) {
+            return false;
+        }
+        LocalDateTime now = LocalDateTime.now();
+        long daysSinceCreation = ChronoUnit.DAYS.between(createdAt, now);
+
+        // Janeiro e Fevereiro
+        if (createdAt.getMonthValue() == 1 || createdAt.getMonthValue() == 2) {
+            return daysSinceCreation <= 35;
+        } else {
+            return daysSinceCreation <= 21;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Orcamento [cliente=" + cliente + ", createdAt=" + createdAt + ", custoImposto=" + custoImposto
+                + ", custoPedido=" + custoPedido + ", deletedAt=" + deletedAt + ", desconto=" + desconto
+                + ", efetivado=" + efetivado + ", id=" + id + ", itensPedido=" + itensPedido + ", totalPagar="
+                + totalPagar + ", updatedAt=" + updatedAt + "]";
     }
 }
 
