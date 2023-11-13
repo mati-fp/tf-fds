@@ -11,7 +11,8 @@ public class DescontoBasico implements DescontoStrategy{
     @Override
     public Double calcularDesconto(OrcamentoModel orcamentoModel, Integer qtdCompras) {
         if (qtdCompras > 5){
-            return orcamentoModel.getCustoPedido() * 0.05;
+            Double desconto = orcamentoModel.getCustoPedido() * 0.05;
+            return desconto;
         }
         return 0.0;
     }

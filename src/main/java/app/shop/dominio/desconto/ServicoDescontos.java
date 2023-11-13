@@ -11,18 +11,19 @@ import app.shop.dominio.model.OrcamentoModel;
 @Service
 public class ServicoDescontos {
 
-    private final List<DescontoStrategy> descontoStrategies;
-
     @Autowired
+    private final List<DescontoStrategy> descontoStrategies;
     public ServicoDescontos(List<DescontoStrategy> descontoStrategies) {
         this.descontoStrategies = descontoStrategies;
     }
 
     public Double calcularDesconto(OrcamentoModel orcamentoModel, Integer qtdCompras) {
-        return descontoStrategies.stream()
+        Double descontoRetornar =  descontoStrategies.stream()
             .map(desconto -> desconto.calcularDesconto(orcamentoModel, qtdCompras))
             .max(Comparator.naturalOrder())
             .orElse(0.0);
+
+        return descontoRetornar;
     }
     
 }

@@ -27,7 +27,8 @@ public class DescontoPorValorMedio implements DescontoStrategy{
             if (desconto > 0.3) {
                 desconto = 0.3;
             }
-            return desconto;
+            Double descontoAplicado = orcamentoModel.getCustoPedido() * desconto;
+            return descontoAplicado;
         }
         return 0.0;
     }

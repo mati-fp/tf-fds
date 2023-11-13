@@ -22,7 +22,8 @@ public class DescontoPorQtdCompras implements DescontoStrategy{
         LocalDateTime seisMesesAtras = LocalDateTime.now().minusMonths(6);
         Integer qtdOrcamentos = orcamentoRepository.getQuantidadeDeOrcamentosNosUltimosSeisMeses(clienteId, seisMesesAtras);
         if (qtdOrcamentos >= 10) {
-            return 0.25;
+            Double desconto = orcamentoModel.getCustoPedido() * 0.25;
+            return desconto;
         } else {
             return 0.0;
         }

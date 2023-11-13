@@ -27,10 +27,7 @@ public class RepOrcamento implements IRepOrcamento{
 
     public OrcamentoModel save(OrcamentoModel orcamentoModel){
         Orcamento orcamentoEntity = ModelEntityMapper.orcamentoToEntity(orcamentoModel);
-        System.out.println("orcamentoEntity1: " + orcamentoEntity);
         orcamentoEntity = orcamentoRep.save(orcamentoEntity);
-        System.out.println("orcamentoEntity2: " + orcamentoEntity);
-        System.out.println("Model: " + ModelEntityMapper.orcamentoToModel(orcamentoEntity));
         return ModelEntityMapper.orcamentoToModel(orcamentoEntity);
     }
 
