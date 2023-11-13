@@ -67,4 +67,16 @@ public class RepOrcamento implements IRepOrcamento{
         Integer qtd = orcamentoRep.getQuantidadeDeOrcamentosNosUltimosSeisMeses(clienteId, seisMesesAtras);
         return qtd;
     }
+
+    public List<OrcamentoModel> findByEfetivadoAndCreatedAtYear(int ano){
+        List<Orcamento> orcamentoENtity = orcamentoRep.findByEfetivadoAndCreatedAtYear(true, ano);
+
+        List<OrcamentoModel> orcamentoModels = new ArrayList<>();
+
+        for (Orcamento orcamento : orcamentoENtity) {
+            orcamentoModels.add(ModelEntityMapper.orcamentoToModel(orcamento));
+        }
+
+        return orcamentoModels;
+    }
 }

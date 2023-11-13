@@ -11,9 +11,10 @@ public interface IRepOrcamento {
     
     OrcamentoModel save(OrcamentoModel orcamento);
     OrcamentoModel findById(UUID orcamentoId) throws RuntimeException;
+
     List<OrcamentoModel> findTopNByEfetivadoOrderByCreatedAtDesc(int n);
+    List<OrcamentoModel> findByEfetivadoAndCreatedAtYear(int ano);
 
     Double getValorDas3UltimasComprasPorCliente(Long clienteId);
-
     Integer getQuantidadeDeOrcamentosNosUltimosSeisMeses(Long clienteId, LocalDateTime seisMesesAtras);
 }

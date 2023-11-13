@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.shop.aplicacao.relatorios.Relatorio;
+import app.shop.aplicacao.relatorios.RelatorioProdutoDto;
 import app.shop.aplicacao.useCases.EfetivarOrcamento;
 import app.shop.aplicacao.useCases.GerarRelatorio;
 import app.shop.aplicacao.useCases.ProdutosDisponiveis;
@@ -62,10 +63,16 @@ public class Controller {
         }
     }
 
-    @GetMapping("relatorio")
+    @GetMapping("relatorioUltimosOrcamentos")
     @CrossOrigin("*")
-    public List<Relatorio> relatorio(@RequestParam("n") final int n){
+    public List<Relatorio> relatorioUltimosOrcamentos(@RequestParam("n") final int n){
         return gerarRelatorio.gerarRelatorioUltimosOrcamentos(n);
+    }
+
+    @GetMapping("relatorioProdutosMaisVendidosNoAno")
+    @CrossOrigin("*")
+    public List<RelatorioProdutoDto> relatorioProdutosMaisVendidosNoAno(@RequestParam("ano") final int ano){
+        return gerarRelatorio.gerarRelatorioProdutosMaisVendidosNoAno(ano);
     }
 
 }

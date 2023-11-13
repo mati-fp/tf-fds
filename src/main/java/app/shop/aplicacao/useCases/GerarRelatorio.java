@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.shop.aplicacao.relatorios.Relatorio;
+import app.shop.aplicacao.relatorios.RelatorioProdutoDto;
 import app.shop.aplicacao.relatorios.ServicoRelatorio;
 
 @Component
@@ -16,5 +17,9 @@ public class GerarRelatorio {
 
     public List<Relatorio> gerarRelatorioUltimosOrcamentos(int n) {
         return servicoRelatorio.gerarRelatorioUltimosOrcamentos(n);
+    }
+
+    public List<RelatorioProdutoDto> gerarRelatorioProdutosMaisVendidosNoAno(int ano){
+        return servicoRelatorio.gerarRelatorioProdutosMaisVendidosNoAno(ano);
     }
 }
