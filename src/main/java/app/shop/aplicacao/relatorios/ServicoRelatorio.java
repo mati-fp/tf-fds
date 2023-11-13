@@ -56,6 +56,8 @@ public class ServicoRelatorio {
                 }
             }
         }
-        
+        // Continuar daqui deixando na lista anterior somente os 10 mais vendidos
+        List<RelatorioProdutoDto> relatorio = new ArrayList<>();
+        return relatorio;
     }
 }
