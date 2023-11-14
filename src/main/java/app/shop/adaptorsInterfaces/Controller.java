@@ -81,9 +81,9 @@ public class Controller {
         return gerarRelatorio.gerarRelatorioProdutosMenosVendidosNoAno(ano);
     }
 
-    @GetMapping("produtosMiasCompradosPeloCliente")
+    @GetMapping("produtosMaisCompradosPeloCliente")
     @CrossOrigin("*")
-    public List<RelatorioProdutoDto> produtosMiasCompradosPeloCliente(@RequestParam("clienteId") final Long clienteId){
+    public List<RelatorioProdutoDto> produtosMaisCompradosPeloCliente(@RequestParam("clienteId") final Long clienteId){
         return gerarRelatorio.gerarRelatorioProdutosMaisCompradosPeloCliente(clienteId);
     }
 
