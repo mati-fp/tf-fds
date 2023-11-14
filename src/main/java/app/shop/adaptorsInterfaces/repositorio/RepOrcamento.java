@@ -69,7 +69,19 @@ public class RepOrcamento implements IRepOrcamento{
     }
 
     public List<OrcamentoModel> findByEfetivadoAndCreatedAtYear(int ano){
-        List<Orcamento> orcamentoENtity = orcamentoRep.findByEfetivadoAndCreatedAtYear(true, ano);
+        List<Orcamento> orcamentoENtity = orcamentoRep.findByEfetivadoAndCreatedAtYear(1, ano);
+
+        List<OrcamentoModel> orcamentoModels = new ArrayList<>();
+
+        for (Orcamento orcamento : orcamentoENtity) {
+            orcamentoModels.add(ModelEntityMapper.orcamentoToModel(orcamento));
+        }
+
+        return orcamentoModels;
+    }
+
+    public List<OrcamentoModel> findByClienteId(Long id) {
+        List<Orcamento> orcamentoENtity = orcamentoRep.findByClienteId(id);
 
         List<OrcamentoModel> orcamentoModels = new ArrayList<>();
 

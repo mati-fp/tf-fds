@@ -17,4 +17,6 @@ public interface IRepOrcamento {
 
     Double getValorDas3UltimasComprasPorCliente(Long clienteId);
     Integer getQuantidadeDeOrcamentosNosUltimosSeisMeses(Long clienteId, LocalDateTime seisMesesAtras);
+
+    List<OrcamentoModel> findByClienteId(Long clienteId);
 }

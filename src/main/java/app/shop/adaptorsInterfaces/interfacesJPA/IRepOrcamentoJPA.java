@@ -21,6 +21,9 @@ public interface IRepOrcamentoJPA extends JpaRepository<Orcamento, UUID> {
     @Query("SELECT count(o) FROM Orcamento o WHERE o.cliente.id = :clienteId AND o.createdAt >= :seisMesesAtras and o.efetivado = 1")
     Integer getQuantidadeDeOrcamentosNosUltimosSeisMeses(@Param("clienteId") Long clienteId, @Param("seisMesesAtras") LocalDateTime seisMesesAtras);
     
-    List<Orcamento> findByEfetivadoAndCreatedAtYear(boolean efetivado, int ano);
+    @Query("SELECT o FROM Orcamento o WHERE o.efetivado = :efetivado AND EXTRACT(YEAR FROM o.createdAt) = :ano")
+    List<Orcamento> findByEfetivadoAndCreatedAtYear(@Param("efetivado") int efetivado, @Param("ano") int ano);
+
+    List<Orcamento> findByClienteId(Long clienteId);
 
 }

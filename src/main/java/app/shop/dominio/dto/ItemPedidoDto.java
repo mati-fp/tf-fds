@@ -8,4 +8,8 @@ public class ItemPedidoDto {
         this.codigoProduto = codigoProduto;
         this.quantidade = quantidade;
     }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
 }
