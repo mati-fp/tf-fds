@@ -26,4 +26,5 @@ Se você encontrar um problema de permissão ao tentar executar o script `entryp
     sudo chmod +x ./entrypoint.sh
     ```
 
+
     Este comando dá ao arquivo entrypoint.sh permissões de execução, permitindo que ele seja executado como um script.
