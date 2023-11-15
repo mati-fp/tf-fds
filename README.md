@@ -22,9 +22,8 @@ PUCRS - Profº Bernardo Copstein
 
 Se você encontrar um problema de permissão ao tentar executar o script `entrypoint.sh`, você pode resolver isso dando ao arquivo permissões de execução. Execute o seguinte comando para fazer isso:
 
-    ```
+    
     sudo chmod +x ./entrypoint.sh
-    ```
+    
 
-
-    Este comando dá ao arquivo entrypoint.sh permissões de execução, permitindo que ele seja executado como um script.
+Este comando dá ao arquivo entrypoint.sh permissões de execução, permitindo que ele seja executado como um script.
