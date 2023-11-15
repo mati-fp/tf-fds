@@ -1,16 +1,20 @@
 package app.shop.dominio;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -40,86 +44,199 @@ public class ServicoEstoqueTest {
     @Mock
     private IRepProduto produtosRep;
 
-    private ProdutoModel produtoModel;
-    private ItemDeEstoqueModel itemEstoqueModel;
-    private ItemPedidoModel itemPedidoModel;
-    private OrcamentoModel orcamentoModel;
+    @Test
+    public void testVerificaProdutosComQuantidadeSuficienteDoisProdutos() {
+        // Dados de entrada para dois produtos
+        List<ItemPedidoDto> itensPedido = new ArrayList<>();
+        itensPedido.add(new ItemPedidoDto(1L, 3)); // Produto 1
+        itensPedido.add(new ItemPedidoDto(2L, 2)); // Produto 2
 
-    @BeforeEach
-    public void inicializar() {
-        produtoModel = mock(ProdutoModel.class);
-        itemEstoqueModel = mock(ItemDeEstoqueModel.class);
-        itemPedidoModel = mock(ItemPedidoModel.class);
-        orcamentoModel = mock(OrcamentoModel.class);
+        // Mock de dois produtos
+        ProdutoModel produto1 = new ProdutoModel();
+        produto1.setCodigo(1L);
+        produto1.setDescricao("Produto 1");
+
+        ProdutoModel produto2 = new ProdutoModel();
+        produto2.setCodigo(2L);
+        produto2.setDescricao("Produto 2");
+
+        // Mock de itens de estoque
+        ItemDeEstoqueModel itemEstoque1 = new ItemDeEstoqueModel();
+        itemEstoque1.setQuantidadeAtual(5); // Quantidade suficiente para produto 1
+
+        ItemDeEstoqueModel itemEstoque2 = new ItemDeEstoqueModel();
+        itemEstoque2.setQuantidadeAtual(4); // Quantidade suficiente para produto 2
+
+        // Configuração dos mocks
+        when(produtosRep.findById(1L)).thenReturn(produto1);
+        when(produtosRep.findById(2L)).thenReturn(produto2);
+        when(itemEstoqueRep.findByProduto(produto1)).thenReturn(itemEstoque1);
+        when(itemEstoqueRep.findByProduto(produto2)).thenReturn(itemEstoque2);
+
+        // Chama o método a ser testado
+        List<ProdutoModel> produtos = servicoEstoque.verificaProdutos(itensPedido);
+
+        // Verificações
+        assertNotNull(produtos);
+        assertEquals(2, produtos.size());
+        assertTrue(produtos.contains(produto1));
+        assertTrue(produtos.contains(produto2));
+
+        // Verifica se os métodos mockados foram chamados
+        verify(produtosRep, times(1)).findById(1L);
+        verify(produtosRep, times(1)).findById(2L);
+        verify(itemEstoqueRep, times(1)).findByProduto(produto1);
+        verify(itemEstoqueRep, times(1)).findByProduto(produto2);
     }
 
     @Test
-    public void testProdutosDisponiveis() {
-        List<ProdutoModel> produtos = new ArrayList<ProdutoModel>();
-        produtos.add(produtoModel);
-        when(produtosRep.findAll()).thenReturn(produtos);
+    public void testVerificaProdutosComQuantidadeInsuficienteEmUmDosDoisProdutos() {
+        // Dados de entrada para dois produtos
+        List<ItemPedidoDto> itensPedido = new ArrayList<>();
+        itensPedido.add(new ItemPedidoDto(1L, 3)); // Produto 1 com quantidade suficiente
+        itensPedido.add(new ItemPedidoDto(2L, 6)); // Produto 2 com quantidade insuficiente
 
-        List<ProdutoModel> produtosDisponiveis = servicoEstoque.produtosDisponiveis();
+        // Mock de dois produtos
+        ProdutoModel produto1 = new ProdutoModel();
+        produto1.setCodigo(1L);
+        produto1.setDescricao("Produto 1");
 
-        assertEquals(produtos, produtosDisponiveis);
+        ProdutoModel produto2 = new ProdutoModel();
+        produto2.setCodigo(2L);
+        produto2.setDescricao("Produto 2");
+
+        // Mock de itens de estoque
+        ItemDeEstoqueModel itemEstoque1 = new ItemDeEstoqueModel();
+        itemEstoque1.setQuantidadeAtual(5); // Quantidade suficiente para produto 1
+
+        ItemDeEstoqueModel itemEstoque2 = new ItemDeEstoqueModel();
+        itemEstoque2.setQuantidadeAtual(4); // Quantidade insuficiente para produto 2
+
+        // Configura o comportamento dos mocks
+        when(produtosRep.findById(1L)).thenReturn(produto1);
+        when(produtosRep.findById(2L)).thenReturn(produto2);
+        when(itemEstoqueRep.findByProduto(produto1)).thenReturn(itemEstoque1);
+        when(itemEstoqueRep.findByProduto(produto2)).thenReturn(itemEstoque2);
+
+        // Chama o método e verifique se a exceção é lançada
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            servicoEstoque.verificaProdutos(itensPedido);
+        });
+
+        // Verifica a mensagem da exceção
+        assertTrue(exception.getMessage().contains("Quantidade insuficiente para o produto"));
+
+        // Verifica se os métodos mockados foram chamados
+        verify(produtosRep, times(1)).findById(1L);
+        verify(produtosRep, times(1)).findById(2L);
+        verify(itemEstoqueRep, times(1)).findByProduto(produto1);
+        // O teste deve parar antes de verificar o segundo produto, pois a exceção é lançada
     }
 
     @Test
-    public void testVerificaProdutos() {
-        // Primeiro produto
-        ItemPedidoDto itemDto1 = mock(ItemPedidoDto.class);
-        when(itemDto1.codigoProduto).thenReturn(produtoModel.getCodigo());
-        when(itemDto1.quantidade).thenReturn(10);
+    public void testBuscaProdutosPorNPedidoRetornaTrueQuandoProdutosDisponiveis() {
+        // Mock do Orçamento
+        OrcamentoModel orcamento = new OrcamentoModel();
+        UUID uuid = UUID.randomUUID();
+        orcamento.setId(uuid);
 
-        // Segundo produto
-        ItemPedidoDto itemDto2 = mock(ItemPedidoDto.class);
-        ProdutoModel produtoModel2 = mock(ProdutoModel.class);
-        when(itemDto2.codigoProduto).thenReturn(produtoModel2.getCodigo());
-        when(itemDto2.quantidade).thenReturn(20);
+        // Mock de itens do pedido
+        List<ItemPedidoModel> itensPedido = new ArrayList<>();
+        ItemPedidoModel item1 = new ItemPedidoModel();
+        item1.setQuantidade(2);
+        ProdutoModel produto1 = new ProdutoModel();
+        produto1.setCodigo(1L);
+        item1.setProduto(produto1);
 
-        // Configura o repositório para também retornar o segundo produto
-        ItemDeEstoqueModel itemEstoqueModel2 = mock(ItemDeEstoqueModel.class);
+        ItemPedidoModel item2 = new ItemPedidoModel();
+        item2.setQuantidade(3);
+        ProdutoModel produto2 = new ProdutoModel();
+        produto2.setCodigo(2L);
+        item2.setProduto(produto2);
 
-        when(itemEstoqueModel.getProduto()).thenReturn(produtoModel);
-        when(itemEstoqueModel.getQuantidadeAtual()).thenReturn(100);
-        when(itemEstoqueRep.findByProduto(produtoModel)).thenReturn(itemEstoqueModel);
+        itensPedido.add(item1);
+        itensPedido.add(item2);
 
-        when(itemEstoqueModel2.getProduto()).thenReturn(produtoModel2);
-        when(itemEstoqueModel2.getQuantidadeAtual()).thenReturn(250);
-        when(itemEstoqueRep.findByProduto(produtoModel2)).thenReturn(itemEstoqueModel2);
+        // Mock de itens de estoque
+        ItemDeEstoqueModel estoque1 = new ItemDeEstoqueModel();
+        estoque1.setQuantidadeAtual(5); // Quantidade suficiente para o item 1
 
-        List<ItemPedidoDto> itensPedidoDto = new ArrayList<ItemPedidoDto>();
-        itensPedidoDto.add(itemDto1);
-        itensPedidoDto.add(itemDto2);
+        ItemDeEstoqueModel estoque2 = new ItemDeEstoqueModel();
+        estoque2.setQuantidadeAtual(6); // Quantidade suficiente para o item 2
 
-        List<ProdutoModel> produtosDisponiveis = servicoEstoque.verificaProdutos(itensPedidoDto);
+        // Configure o comportamento dos mocks
+        when(itemPedidoRep.findByOrcamento(orcamento)).thenReturn(itensPedido);
+        when(produtosRep.findById(1L)).thenReturn(produto1);
+        when(produtosRep.findById(2L)).thenReturn(produto2);
+        when(itemEstoqueRep.findByProduto(produto1)).thenReturn(estoque1);
+        when(itemEstoqueRep.findByProduto(produto2)).thenReturn(estoque2);
 
-        assertEquals(2, produtosDisponiveis.size()); // Espera que dois produtos estejam disponíveis
-        assertEquals(produtoModel, produtosDisponiveis.get(0));
-        assertEquals(produtoModel2, produtosDisponiveis.get(1));
+        // Chama o método a ser testado
+        Boolean resultado = servicoEstoque.buscaProdutosPorNPedido(orcamento);
+
+        // Verificações
+        assertTrue(resultado);
+
+        // Verifica se os métodos mockados foram chamados
+        verify(itemPedidoRep, times(1)).findByOrcamento(orcamento);
+        verify(produtosRep, times(1)).findById(1L);
+        verify(produtosRep, times(1)).findById(2L);
+        verify(itemEstoqueRep, times(1)).findByProduto(produto1);
+        verify(itemEstoqueRep, times(1)).findByProduto(produto2);
+        // Verifica se o save foi chamado para cada item de estoque
+        verify(itemEstoqueRep, times(2)).save(any(ItemDeEstoqueModel.class)); 
     }
 
     @Test
-    public void testBuscaProdutosPorNPedido() {
-        // Configura o mock para retornar um produto quando findById for chamado
-        when(produtosRep.findById(produtoModel.getCodigo())).thenReturn(produtoModel);
+    public void testBuscaProdutosPorNPedidoRetornaFalseQuandoQuantidadeInsuficiente() {
+        // Mock do Orçamento
+        OrcamentoModel orcamento = new OrcamentoModel();
+        UUID uuid = UUID.randomUUID();
+        orcamento.setId(uuid);
 
-        // Configura o mock para retornar um item de estoque quando findByProduto for chamado
-        when(itemEstoqueRep.findByProduto(produtoModel)).thenReturn(itemEstoqueModel);
+        // Mock de itens do pedido
+        List<ItemPedidoModel> itensPedido = new ArrayList<>();
+        ItemPedidoModel item1 = new ItemPedidoModel();
+        item1.setQuantidade(4); // Quantidade maior do que a disponível para o item 1
+        ProdutoModel produto1 = new ProdutoModel();
+        produto1.setCodigo(1L);
+        item1.setProduto(produto1);
 
-        // Configura o mock para retornar uma quantidade suficiente quando getQuantidadeAtual for chamado
-        when(itemEstoqueModel.getQuantidadeAtual()).thenReturn(itemPedidoModel.getQuantidade() + 1);
+        ItemPedidoModel item2 = new ItemPedidoModel();
+        item2.setQuantidade(1); // Quantidade menor ou igual à disponível para o item 2
+        ProdutoModel produto2 = new ProdutoModel();
+        produto2.setCodigo(2L);
+        item2.setProduto(produto2);
 
-        // Configura o mock para retornar um item de pedido quando findByOrcamento for chamado
-        List<ItemPedidoModel> itensPedido = new ArrayList<ItemPedidoModel>();
-        itensPedido.add(itemPedidoModel);
-        when(itemPedidoRep.findByOrcamento(orcamentoModel)).thenReturn(itensPedido);
+        itensPedido.add(item1);
+        itensPedido.add(item2);
 
-        // Chama a função e verifica se ela retorna true
-        Boolean produtosEncontrados = servicoEstoque.buscaProdutosPorNPedido(orcamentoModel);
-        assertEquals(true, produtosEncontrados);
+        // Mock de itens de estoque
+        ItemDeEstoqueModel estoque1 = new ItemDeEstoqueModel();
+        estoque1.setQuantidadeAtual(3); // Quantidade insuficiente para o item 1
 
-        // Verifica se save foi chamado no repositório de itens de estoque
-        verify(itemEstoqueRep, times(1)).save(any(ItemDeEstoqueModel.class));
+        ItemDeEstoqueModel estoque2 = new ItemDeEstoqueModel();
+        estoque2.setQuantidadeAtual(2); // Quantidade suficiente para o item 2
+
+        // Configura o comportamento dos mocks
+        when(itemPedidoRep.findByOrcamento(orcamento)).thenReturn(itensPedido);
+        when(produtosRep.findById(1L)).thenReturn(produto1);
+        when(itemEstoqueRep.findByProduto(produto1)).thenReturn(estoque1);
+
+        // Chama o método a ser testado
+        Boolean resultado = servicoEstoque.buscaProdutosPorNPedido(orcamento);
+
+        // Verificações
+        assertFalse(resultado);
+
+        // Verifica se os métodos mockados foram chamados
+        verify(itemPedidoRep, times(1)).findByOrcamento(orcamento);
+        verify(produtosRep, times(1)).findById(1L);
+        verify(produtosRep, never()).findById(2L);
+        verify(itemEstoqueRep, times(1)).findByProduto(produto1);
+        verify(itemEstoqueRep, never()).findByProduto(produto2);
+        // Verifica se o save NÃO foi chamado
+        verify(itemEstoqueRep, never()).save(any(ItemDeEstoqueModel.class)); 
     }
+
 }

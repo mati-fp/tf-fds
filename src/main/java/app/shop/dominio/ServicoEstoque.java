@@ -32,11 +32,11 @@ public class ServicoEstoque {
         List<ProdutoModel> produtos = new ArrayList<>();
         try {
             for (ItemPedidoDto item : itens) {
-                ProdutoModel produto = produtosRep.findById(item.codigoProduto);
+                ProdutoModel produto = produtosRep.findById(item.getCodigoProduto());
 
                 ItemDeEstoqueModel itemDeEstoqueOpt = itemEstoqueRep.findByProduto(produto);
 
-                if (itemDeEstoqueOpt.getQuantidadeAtual() < item.quantidade) {
+                if (itemDeEstoqueOpt.getQuantidadeAtual() < item.getQuantidade()) {
                     throw new RuntimeException("Quantidade insuficiente para o produto: " + produto.getDescricao());
                 }
 

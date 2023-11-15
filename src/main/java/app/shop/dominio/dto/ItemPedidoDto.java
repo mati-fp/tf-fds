@@ -12,4 +12,8 @@ public class ItemPedidoDto {
     public Integer getQuantidade() {
         return quantidade;
     }
+
+    public Long getCodigoProduto() {
+        return codigoProduto;
+    }
 }
