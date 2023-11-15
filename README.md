@@ -18,6 +18,10 @@ PUCRS - Profº Bernardo Copstein
 
     Este comando irá construir a imagem Docker a partir do Dockerfile e, em seguida, iniciar um container a partir dessa imagem. O flag `--build` instrui o Docker a construir a imagem antes de iniciar o container.
 
+## Recomendações:
+
+#### Subir primeiro apenas o Postgres e utilizar os scripts sql de criação de tabelas e inserção de dados antes de subir a aplicação por inteira.
+
 ## Solução de problemas:
 
 Se você encontrar um problema de permissão ao tentar executar o script `entrypoint.sh`, você pode resolver isso dando ao arquivo permissões de execução. Execute o seguinte comando para fazer isso:
