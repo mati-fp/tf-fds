@@ -16,13 +16,13 @@ public class EfetivarOrcamento {
     private ServicoVendas servicoVendas;
         
 
-    public String fazPagamento(String orcamentoId) {
+    public String fazPagamento(String orcamentoId) throws RuntimeException{
         OrcamentoModel orcamento = servicoVendas.buscaOrcamento(orcamentoId);
         if (!orcamento.isValid()) {
-            return "Orcamento expirado";
+            throw new RuntimeException("Orcamento expirado");
         }
         if (orcamento.getEfetivado() == 1) {
-            return "Orcamento já foi efetivado anteriormente";
+            throw new RuntimeException("Orcamento já foi efetivado anteriormente");
         }
         Boolean efetiva = servicoEstoque.buscaProdutosPorNPedido(orcamento);
         if (efetiva) {
@@ -30,6 +30,6 @@ public class EfetivarOrcamento {
             return "Pagamento efetivado";
         }
 
-        return "Não efetivado";
+        throw new RuntimeException("Não efetivado");
     }
 }
