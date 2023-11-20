@@ -1,4 +1,5 @@
 #!/bin/bash
+mvn clean install
 mvn test
 if [ $? -eq 0 ]
 then
