@@ -1,0 +1,8 @@
+INSERT INTO public.cliente (nome) VALUES
+	 ('MATEUS POLETTO'),
+	 ('ANA LUÍSA'),
+	 ('JOÃO BOBO'),
+	 ('BERNARDO COPSTEIN')
+	 ('ALEXANDRE O GRANDE AUGUSTINI'),
+	 ('JAVIER MILEI');
+
