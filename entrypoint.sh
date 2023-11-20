@@ -2,6 +2,7 @@
 mvn test
 if [ $? -eq 0 ]
 then
+  mvn clean install
   mvn spring-boot:run
 else
   echo "Os testes falharam."
