@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "7b897a52-9d94-431b-bc29-19d47fe63a07",
+		"name": "Spring-boot-tf",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22949362"
+	},
+	"item": [
+		{
+			"name": "Faz-Pagamento",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/fazPagamento?orcamentoId=cd645eae-6992-46c5-9ed0-b5e59a091d28",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fazPagamento"
+					],
+					"query": [
+						{
+							"key": "orcamentoId",
+							"value": "cd645eae-6992-46c5-9ed0-b5e59a091d28"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Relatorio-Ultimos-Orcamentos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/relatorioUltimosOrcamentos?nOrcamentos=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"relatorioUltimosOrcamentos"
+					],
+					"query": [
+						{
+							"key": "nOrcamentos",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Relatorio-Produtos-Mais-Vendidos-No-Ano",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/relatorioProdutosMaisVendidosNoAno?ano=2023",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"relatorioProdutosMaisVendidosNoAno"
+					],
+					"query": [
+						{
+							"key": "ano",
+							"value": "2023"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Relatorio-Produtos-Menos-Vendidos-No-Ano",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/relatorioProdutosMenosVendidosNoAno?ano=2023",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"relatorioProdutosMenosVendidosNoAno"
+					],
+					"query": [
+						{
+							"key": "ano",
+							"value": "2023"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Relatorio-Produtos-Mais-Comprados-Pelo-Cliente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/produtosMaisCompradosPeloCliente?clienteId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produtosMaisCompradosPeloCliente"
+					],
+					"query": [
+						{
+							"key": "clienteId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produtos-Disponiveis",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/produtosDisponiveis",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produtosDisponiveis"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Faz-Pedido",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nomeCliente\": \"joão bobo\",\n    \"itens\": [ {\n        \"codigoProduto\": 1,\n        \"quantidade\": 10\n    },\n    {\n        \"codigoProduto\": 2,\n        \"quantidade\": 10\n    },\n    {\n        \"codigoProduto\": 3,\n        \"quantidade\": 10\n    },\n    {\n        \"codigoProduto\": 4,\n        \"quantidade\": 10\n    },\n    {\n        \"codigoProduto\": 5,\n        \"quantidade\": 10\n    },\n    {\n        \"codigoProduto\": 6,\n        \"quantidade\": 10\n    }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/fazPedido",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fazPedido"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
