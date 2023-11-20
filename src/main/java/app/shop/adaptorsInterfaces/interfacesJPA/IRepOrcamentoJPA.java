@@ -13,7 +13,8 @@ import org.springframework.data.repository.query.Param;
 import app.shop.adaptorsInterfaces.entity.Orcamento;
 
 public interface IRepOrcamentoJPA extends JpaRepository<Orcamento, UUID> {
-    List<Orcamento> findTopNByEfetivadoOrderByCreatedAtDesc(boolean efetivado, Pageable pageable);
+    @Query("SELECT o FROM Orcamento o WHERE o.efetivado = :efetivado ORDER BY o.createdAt DESC")
+    List<Orcamento> findTopNByEfetivadoOrderByCreatedAtDesc(@Param("efetivado") Integer efetivado, Pageable pageable);
 
     @Query("SELECT o.totalPagar FROM Orcamento o WHERE o.cliente.id = :clienteId AND o.efetivado = 1 ORDER BY o.createdAt DESC")
     List<Double> findSumOfLastThreeEffectiveOrcamentos(@Param("clienteId") Long clienteId, Pageable pageable);

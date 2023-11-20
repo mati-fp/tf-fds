@@ -42,7 +42,7 @@ public class RepOrcamento implements IRepOrcamento{
     public List<OrcamentoModel> findTopNByEfetivadoOrderByCreatedAtDesc(int n){
         Pageable limit = PageRequest.of(0, n);
 
-        List<Orcamento> orcamentosEntity = orcamentoRep.findTopNByEfetivadoOrderByCreatedAtDesc(true, limit);
+        List<Orcamento> orcamentosEntity = orcamentoRep.findTopNByEfetivadoOrderByCreatedAtDesc(1, limit);
 
         List<OrcamentoModel> orcamentosModel = new ArrayList<>();
 
