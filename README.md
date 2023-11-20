@@ -24,10 +24,17 @@ PUCRS - Profº Bernardo Copstein
 
 ## Solução de problemas:
 
-Se você encontrar um problema de permissão ao tentar executar o script `entrypoint.sh`, você pode resolver isso dando ao arquivo permissões de execução. Execute o seguinte comando para fazer isso:
+### Se você encontrar um problema de permissão ao tentar executar o script `entrypoint.sh`, você pode resolver isso dando ao arquivo permissões de execução. Execute o seguinte comando para fazer isso:
 
     
     sudo chmod +x ./entrypoint.sh
     
 
 Este comando dá ao arquivo entrypoint.sh permissões de execução, permitindo que ele seja executado como um script.
+
+
+### Problemas de permissão com o diretório .pgdata
+
+Se você encontrar problemas de permissão com o diretório .pgdata, você pode alterar o proprietário do diretório usando o seguinte comando:
+
+    sudo chown -R <nome-de-usuario>:<nome-do-grupo> .pgdata
